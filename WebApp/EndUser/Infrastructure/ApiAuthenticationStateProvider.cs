@@ -42,9 +42,6 @@ namespace ClientWebAppBlazor.Infrastructure
             var authenticatedUser = new ClaimsPrincipal(new ClaimsIdentity(ParseClaimsFromJwt(token), "jwt"));
             var authState = Task.FromResult(new AuthenticationState(authenticatedUser));
             NotifyAuthenticationStateChanged(authState);
-
-           
-
         }
 
         public async Task<JwtToken> GetLoggedInUserDetails()
@@ -57,11 +54,16 @@ namespace ClientWebAppBlazor.Infrastructure
 
             foreach (var item in claims)
             {
-                Console.WriteLine(item.Type +  " - " + item.Value);
+                Console.WriteLine(item.Type + " - " + item.Value);
 
                 if (item.Type == "UserName")
                 {
                     jwtToken.UserName = item.Value;
+                }
+
+                if (item.Type == "UserId")
+                {
+                    jwtToken.UserId = Convert.ToInt64(item.Value);
                 }
             }
 

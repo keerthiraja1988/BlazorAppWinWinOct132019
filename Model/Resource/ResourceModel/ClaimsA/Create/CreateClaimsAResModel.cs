@@ -16,19 +16,35 @@ namespace ResourceModel.ClaimsA.Create
 
         [Required]
         [Range(30000, 99999)]
-        public int ProductId { get; set; }
+        public int? ProductId { get; set; } = null;
+
+        [Required]
+        [Range(1, 99999)]
+        public int? Quantity { get; set; } = 0;
+
+        [Required]
+        [Range(0.01, 9999999)]
+        public decimal? ProductCost { get; set; } = null;
+
+        private decimal? productTotalCost;
+
+        public decimal? ProductTotalCost
+        {
+            set
+            {
+                productTotalCost = ProductCost * Quantity;
+            }
+            get
+            {
+                return ProductCost * Quantity;
+            }
+        }
 
         [Required]
         public string ReasonId { get; set; }
 
-        public decimal ProductCost { get; set; } = 0.00m;
-
-        [Required]
-        [Range(1, 99999)]
-        public int? Quantity { get; set; }
-
-        public decimal ProductTotalCost { get; set; }
-
         public string Comments { get; set; }
+
+        public long CreatedBy { get; set; }
     }
 }

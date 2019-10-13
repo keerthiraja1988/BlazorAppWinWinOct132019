@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Blazored.LocalStorage;
 using ClientWebAppBlazor.Infrastructure;
 using ResourceModel.Api;
+using ResourceModel.ClaimsA.Create;
 
 namespace ClientWebAppBlazor.Services
 {
@@ -40,9 +41,35 @@ namespace ClientWebAppBlazor.Services
             claimsACount = await _httpClient.GetJsonAsync<Int64>(url + "/api/ClaimsA/GetClaimsCountAsync" + "?userId=" + userId);
             //string stringJWT = response.Content.ReadAsStringAsync().Result;
             //claimsACount = JsonConvert.DeserializeObject<Int64>(stringJWT);
-           
+
             return 123;
         }
-    }
 
+        public async Task<Int64> GetOpenClaimIdAsync(Int64 userId)
+        {
+            Int64 claimAId = 0;
+            string url = await _appConfiguration.GetApiUrl("ClaimsAServer");
+
+            claimAId = await _httpClient.GetJsonAsync<Int64>(url + "/api/ClaimsA/GetOpenClaimIdAsync" + "?userId=" + userId);
+            return claimAId;
+        }
+
+        public async Task<Int64> CreateClaimAAsync(CreateClaimsAResModel createClaimsA)
+        {
+            string url = await _appConfiguration.GetApiUrl("ClaimsAServer");
+            Int64 claimsAItemId = 0;
+
+            string stringData = JsonConvert.SerializeObject(createClaimsA);
+            var contentData = new StringContent(stringData, System.Text.Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = await _httpClient.PostAsync
+                           (url + "/api/ClaimsA/CreateClaimAAsync", contentData);
+            string stringJWT = response.Content.ReadAsStringAsync().Result;
+            claimsAItemId = JsonConvert.DeserializeObject<Int64>(stringJWT);
+
+            Console.WriteLine("CreateClaimAAsync" + claimsAItemId);
+
+            return claimsAItemId;
+        }
+    }
 }

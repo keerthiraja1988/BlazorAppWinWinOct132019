@@ -2,7 +2,7 @@
 
 namespace DomainModel.ClaimsA.Create
 {
-    public class ClaimsAModel
+    public class ClaimAItemModel
     {
         public long ClaimId { get; set; }
 
@@ -10,11 +10,19 @@ namespace DomainModel.ClaimsA.Create
 
         public int ClaimType { get; set; }
 
-        public int TotalItems { get; set; }
+        public string InvoiceNumber { get; set; }
 
-        public decimal TotalCost { get; set; } = 0.00m;
+        public int ProductId { get; set; }
 
-        public int Status { get; set; }
+        public int ReasonId { get; set; }
+
+        public decimal ProductTotalCost { get; set; }
+
+        public decimal ProductCost { get; set; }
+
+        public int Quantity { get; set; }
+
+        public string Comments { get; set; }
 
         public DateTime CreatedOn { get; set; }
 

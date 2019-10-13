@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using DomainModel;
+using DomainModel.ClaimsA.Create;
 using ResourceModel.Authentication;
+using ResourceModel.ClaimsA.Create;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +16,7 @@ namespace WebApiClaimsA.Infrastructure
         {
             AllowNullDestinationValues = true;
 
-            CreateMap<UserDetailResModel, UserDetailModel>().ReverseMap();
-            CreateMap<RegisterUserResModel, UserDetailModel>().ReverseMap();
-
+            CreateMap<CreateClaimsAResModel, ClaimAItemModel>().ReverseMap();
         }
     }
 }

@@ -27,10 +27,36 @@ namespace ClientWebAppBlazor.Pages.ClaimsA
         public async Task OnDashboardLoad()
         {
             JwtToken = await _authenticationDataAccess.GetLoggedInUserDetails();
+
+            CreateClaimsADTO.CreateClaims.CreatedBy = JwtToken.UserId;
+
+            CreateClaimsADTO.ClaimId = await _claimsADataService.GetOpenClaimIdAsync(JwtToken.UserId);
+
+            if (CreateClaimsADTO.ClaimId > 0)
+            {
+                CreateClaimsADTO.CreateClaims.ClaimId = CreateClaimsADTO.ClaimId;
+            }
         }
 
         public async Task OnCreateClaimAButtonClick()
         {
+            var claimAItemid = await _claimsADataService.CreateClaimAAsync(CreateClaimsADTO.CreateClaims);
+            Console.WriteLine("OnCreateClaimAButtonClick" + claimAItemid);
+            if (claimAItemid > 0)
+            {
+                CreateClaimsADTO = new CreateClaimsADTOResModel();
+                CreateClaimsADTO.CreateClaims.CreatedBy = JwtToken.UserId;
+                CreateClaimsADTO.ClaimId = await _claimsADataService.GetOpenClaimIdAsync(JwtToken.UserId);
+                if (CreateClaimsADTO.ClaimId > 0)
+                {
+                    CreateClaimsADTO.CreateClaims.ClaimId = CreateClaimsADTO.ClaimId;
+                }
+            }
+        }
+
+        public async Task OnAddClaimAClearButtonClick()
+        {
+            CreateClaimsADTO = new CreateClaimsADTOResModel();
         }
     }
 }
