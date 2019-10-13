@@ -1,0 +1,97 @@
+﻿@using System.Threading;
+@using ClientWebAppBlazor.Services
+
+@inject AuthenticationDataAccess _authenticationDataAccess
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+
+@if (!JwtToken.IsUserAuthenticated)
+{
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">Claims</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse pl-2" id="navbarAuth">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="Login" id="navItemLogin">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Register" id="navItemRegister">Register</a>
+                </li>
+            </ul>
+
+
+        </div>
+    </nav>
+}
+else
+{
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">Claims</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse pl-2" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="" id="navItemHome">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a id="navItemClaimA" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Claim-A
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="ClaimsASubmit">Open Claim-A</a>
+                        <a class="dropdown-item" href="#">Claim-A History</a>
+                    </div>
+                </li>
+            </ul>
+
+            
+
+            <form class="form-inline my-2 my-lg-0">
+                <h6 class="pr-4 pt-1" style="color: white;font-size: 20px;">@JwtToken.UserName</h6>
+
+                <button type="button" class="btn btn-danger" @onclick="@(async () => await LogoutUser())">
+                    <Icon Class="" Name="@("fas fa-power-off")" />
+                </button>
+            </form>
+        </div>
+    </nav>
+}
+
+
+@code {
+
+    [Parameter]
+    public JwtToken JwtToken { get; set; } = new JwtToken();
+
+    [Parameter]
+    public string ActivateNav { get; set; }
+
+    string userName = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        string page = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        Console.WriteLine(NavigationManager.Uri);
+        Console.WriteLine(page);
+
+
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JsRuntime.InvokeVoidAsync("homeController.setActiveNavBar", ActivateNav);
+    }
+
+    async Task LogoutUser()
+    {
+        await this._authenticationDataAccess.LogoutUser();
+        NavigationManager.NavigateTo("Login");
+    }
+}

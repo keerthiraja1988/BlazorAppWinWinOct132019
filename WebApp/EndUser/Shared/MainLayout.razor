@@ -1,0 +1,15 @@
+﻿@inherits LayoutComponentBase
+
+@inject AppConfiguration _appConfiguration
+
+@Body
+
+
+
+@code {
+   
+    protected override async Task OnInitializedAsync()
+    {
+       await _appConfiguration.LoadAppConfigToStorage();
+    }
+}

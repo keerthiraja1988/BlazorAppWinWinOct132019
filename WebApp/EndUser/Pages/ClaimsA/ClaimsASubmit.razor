@@ -1,0 +1,28 @@
+﻿@page "/ClaimsASubmit"
+
+@inject IJSRuntime JsRuntime
+@inject AuthenticationDataAccess _authenticationDataAccess
+
+@code {
+
+    public bool isUserAuthenticated { get; set; }
+    JwtToken JwtToken = new JwtToken();
+    protected override async Task OnInitializedAsync()
+    {
+
+        JwtToken = await this._authenticationDataAccess.GetLoggedInUserDetails();
+        isUserAuthenticated = JwtToken.IsUserAuthenticated;
+    }
+
+}
+
+<NavBar JwtToken="@JwtToken" ActivateNav="navItemClaimA">
+</NavBar>
+<div class='container-fluid pt-2'>
+
+    @if (isUserAuthenticated)
+    {
+        <p>ClaimsASubmit</p>
+    }
+
+</div>
