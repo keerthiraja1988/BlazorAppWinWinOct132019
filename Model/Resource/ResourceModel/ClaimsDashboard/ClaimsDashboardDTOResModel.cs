@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using ResourceModel.ClaimsA.Create;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -8,5 +9,4 @@ namespace ResourceModel.ClaimsDashboard
     {
         public Int64 ClaimsACount { get; set; }
     }
-
 }

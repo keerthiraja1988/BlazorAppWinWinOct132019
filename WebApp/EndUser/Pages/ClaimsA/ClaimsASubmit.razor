@@ -3,14 +3,15 @@
 @inject IJSRuntime JsRuntime
 @inject AuthenticationDataAccess _authenticationDataAccess
 
+@inherits ClaimsASubmitBase
+
 @code {
 
     public bool isUserAuthenticated { get; set; }
-    JwtToken JwtToken = new JwtToken();
+
     protected override async Task OnInitializedAsync()
     {
-
-        JwtToken = await this._authenticationDataAccess.GetLoggedInUserDetails();
+        await OnDashboardLoad();
         isUserAuthenticated = JwtToken.IsUserAuthenticated;
     }
 
@@ -22,7 +23,68 @@
 
     @if (isUserAuthenticated)
     {
-        <p>ClaimsASubmit</p>
-    }
+        <div class="row">
+            <div class="col-md-3">
+                <EditForm Model="@CreateClaimsADTO.CreateClaims" OnValidSubmit="@OnCreateClaimAButtonClick">
+                    <Card Class="">
+                        <CardHeader Class="pt-1 pb-1">
+                            <div class="text-center ">
+                                <h4 class="font-weight-normal mb-0">Create Claim-A</h4>
+                            </div>
+                        </CardHeader>
+                        <CardBody Class="pt-1 pb-1 pl-1 pr-1">
 
+                            <DataAnnotationsValidator />
+
+                            <div class="form-label-group mb-2">
+                                <label for="inputInvoiceNumber">Invoice Number</label>
+                                <InputText id="inputInvoiceNumber" @bind-Value="@CreateClaimsADTO.CreateClaims.InvoiceNumber" Class="form-control" />
+
+                                <ValidationMessage For="@(() => CreateClaimsADTO.CreateClaims.InvoiceNumber)" Class="lead text-danger" />
+                            </div>
+
+                            <div class="form-label-group mb-3">
+                                <label for="inputReasonId">Claim Reason</label>
+                                <InputSelect id="inputReasonId" @bind-Value="@CreateClaimsADTO.CreateClaims.ReasonId" Class="form-control">
+                                    <option value="">--Select--</option>
+                                    <option value="1">Exploration</option>
+                                    <option value="2">Diplomacy</option>
+                                    <option value="3">Defense</option>
+                                </InputSelect>
+                                <ValidationMessage For="@(() => CreateClaimsADTO.CreateClaims.ReasonId)" Class="lead text-danger" />
+                            </div>
+
+                            <div class="form-label-group mb-3">
+                                <label for="inputProductId">Product Id</label>
+                                <InputNumber id="inputProductId" @bind-Value="@CreateClaimsADTO.CreateClaims.ProductId" Class="form-control" />
+
+                                <ValidationMessage For="@(() => CreateClaimsADTO.CreateClaims.ProductId)" Class="lead text-danger" />
+                            </div>
+
+                            <div class="form-label-group mb-3">
+                                <label for="inputQuantity">Quantity</label>
+                                <InputNumber id="inputQuantity" @bind-Value="@CreateClaimsADTO.CreateClaims.Quantity" Class="form-control" />
+
+                                <ValidationMessage For="@(() => CreateClaimsADTO.CreateClaims.Quantity)" Class="lead text-danger" />
+                            </div>
+                        </CardBody>
+                        <CardFooter Class="pt-2 pb-2 pl-1 pr-1">
+                            <div class="form-label-group text-center">
+                                <button class="btn btn-primary  mr-2" type="submit">
+                                    <Icon Class="pr-1" Name="@("fas fa-plus")" />    Add
+                                </button>
+
+                                <button class="btn btn-secondary" type="button">
+                                    <Icon Class="pr-1" Name="@("fas fa-redo")" />    Clear
+                                </button>
+                            </div>
+                        </CardFooter>
+                    </Card>
+                </EditForm>
+            </div>
+
+            <div class="col-md-9">
+            </div>
+        </div>
+    }
 </div>

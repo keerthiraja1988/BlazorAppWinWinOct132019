@@ -20,7 +20,5 @@ namespace ResourceModel.Authentication
         [Required]
         [Compare("Password")]
         public string ConfirmPassword { get; set; }
-
     }
-
 }

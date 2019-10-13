@@ -20,11 +20,8 @@ namespace ClientWebAppBlazor.Infrastructure
             _localStorage = localStorage;
         }
 
-
         public async Task<bool> LoadAppConfigToStorage()
         {
-            
-
             List<AppConfigurationValue> items = new List<AppConfigurationValue>();
             List<ApiUrlResModel> apiUrls = new List<ApiUrlResModel>();
 
@@ -36,7 +33,7 @@ namespace ClientWebAppBlazor.Infrastructure
 
             if (urls != null && urls.Count > 0)
             {
-                urls = urls.Where(x => x.Api == "WebApiAuthenticationServer").ToList();
+                urls = urls.Where(x => x.Api != "WebApiAuthenticationServer").ToList();
                 apiUrls.AddRange(urls);
             }
             await _localStorage.RemoveItemAsync("Apis");
@@ -44,6 +41,7 @@ namespace ClientWebAppBlazor.Infrastructure
 
             return true;
         }
+
         public async Task<string> GetApiUrl(string api)
         {
             string url = "";
@@ -64,7 +62,7 @@ namespace ClientWebAppBlazor.Infrastructure
             await _localStorage.RemoveItemAsync("Apis");
 
             List<AppConfigurationValue> items = new List<AppConfigurationValue>();
-           
+
             items = await _httpClient.GetJsonAsync<List<AppConfigurationValue>>("sample-data/appsettings.json");
 
             apiUrls.Add(new ApiUrlResModel { Api = "WebApiAuthenticationServer", ApiUrls = new List<string>() { items.Where(x => x.Key == "WebApiAuthenticationServer").FirstOrDefault().Value } });

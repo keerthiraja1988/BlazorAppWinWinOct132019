@@ -3,15 +3,16 @@ using ClientWebAppBlazor.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using ResourceModel.Authentication;
+using ResourceModel.ClaimsA.Create;
 using ResourceModel.ClaimsDashboard;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ClientWebAppBlazor.Pages.Dashboard
+namespace ClientWebAppBlazor.Pages.ClaimsA
 {
-    public class DashboardBase : ComponentBase
+    public class ClaimsASubmitBase : ComponentBase
     {
         [Inject]
         protected ClaimsADataService _claimsADataService { get; set; }
@@ -21,12 +22,15 @@ namespace ClientWebAppBlazor.Pages.Dashboard
 
         public JwtToken JwtToken { get; set; } = new JwtToken();
 
-        public ClaimsDashboardDTOResModel ClaimsDashboardDTOResModel { get; set; } = new ClaimsDashboardDTOResModel();
+        public CreateClaimsADTOResModel CreateClaimsADTO { get; set; } = new CreateClaimsADTOResModel();
 
         public async Task OnDashboardLoad()
         {
             JwtToken = await _authenticationDataAccess.GetLoggedInUserDetails();
-            ClaimsDashboardDTOResModel.ClaimsACount = await _claimsADataService.GetClaimsCountAsync(JwtToken.UserId);
+        }
+
+        public async Task OnCreateClaimAButtonClick()
+        {
         }
     }
 }
