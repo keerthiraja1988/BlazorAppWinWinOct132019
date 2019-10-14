@@ -22,8 +22,6 @@
                     <a class="nav-link" href="Register" id="navItemRegister">Register</a>
                 </li>
             </ul>
-
-
         </div>
     </nav>
 }
@@ -41,7 +39,7 @@ else
                     <a class="nav-link" href="" id="navItemHome">Home</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a id="navItemClaimA" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a id="navItemClaimA" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Claim-A
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -50,8 +48,6 @@ else
                     </div>
                 </li>
             </ul>
-
-            
 
             <form class="form-inline my-2 my-lg-0">
                 <h6 class="pr-4 pt-1" style="color: white;font-size: 20px;">@JwtToken.UserName</h6>
@@ -63,7 +59,6 @@ else
         </div>
     </nav>
 }
-
 
 @code {
 
@@ -80,7 +75,6 @@ else
         string page = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
         Console.WriteLine(NavigationManager.Uri);
         Console.WriteLine(page);
-
 
     }
 

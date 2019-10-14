@@ -15,6 +15,9 @@ namespace ClientWebAppBlazor.Pages.ClaimsA
     public class ClaimsASubmitBase : ComponentBase
     {
         [Inject]
+        protected IJSRuntime JsRuntime { get; set; }
+
+        [Inject]
         protected ClaimsADataService _claimsADataService { get; set; }
 
         [Inject]
@@ -24,8 +27,11 @@ namespace ClientWebAppBlazor.Pages.ClaimsA
 
         public CreateClaimsADTOResModel CreateClaimsADTO { get; set; } = new CreateClaimsADTOResModel();
 
+        public List<CreateClaimsAResModel> ClaimsAdded { get; set; } = new List<CreateClaimsAResModel>();
+
         public async Task OnDashboardLoad()
         {
+            await JsRuntime.InvokeVoidAsync("homeController.loadClaimsAController", "");
             JwtToken = await _authenticationDataAccess.GetLoggedInUserDetails();
 
             CreateClaimsADTO.CreateClaims.CreatedBy = JwtToken.UserId;
@@ -35,23 +41,43 @@ namespace ClientWebAppBlazor.Pages.ClaimsA
             if (CreateClaimsADTO.ClaimId > 0)
             {
                 CreateClaimsADTO.CreateClaims.ClaimId = CreateClaimsADTO.ClaimId;
+                await LoadClaimAItems();
             }
         }
 
         public async Task OnCreateClaimAButtonClick()
         {
-            var claimAItemid = await _claimsADataService.CreateClaimAAsync(CreateClaimsADTO.CreateClaims);
-            Console.WriteLine("OnCreateClaimAButtonClick" + claimAItemid);
-            if (claimAItemid > 0)
+            if (CreateClaimsADTO.ClaimId == 0)
             {
-                CreateClaimsADTO = new CreateClaimsADTOResModel();
-                CreateClaimsADTO.CreateClaims.CreatedBy = JwtToken.UserId;
                 CreateClaimsADTO.ClaimId = await _claimsADataService.GetOpenClaimIdAsync(JwtToken.UserId);
+
                 if (CreateClaimsADTO.ClaimId > 0)
                 {
                     CreateClaimsADTO.CreateClaims.ClaimId = CreateClaimsADTO.ClaimId;
                 }
             }
+
+            var claimAItemid = await _claimsADataService.CreateClaimAAsync(CreateClaimsADTO.CreateClaims);
+
+            if (claimAItemid > 0)
+            {
+                CreateClaimsADTO = new CreateClaimsADTOResModel();
+                CreateClaimsADTO.CreateClaims.CreatedBy = JwtToken.UserId;
+
+                CreateClaimsADTO.ClaimId = await _claimsADataService.GetOpenClaimIdAsync(JwtToken.UserId);
+                if (CreateClaimsADTO.ClaimId > 0)
+                {
+                    CreateClaimsADTO.CreateClaims.ClaimId = CreateClaimsADTO.ClaimId;
+                }
+
+                await JsRuntime.InvokeVoidAsync("claimsAController.claimsItemAddedSuccessfully", "");
+                await LoadClaimAItems();
+            }
+        }
+
+        public async Task LoadClaimAItems()
+        {
+            ClaimsAdded = await _claimsADataService.GetClaimItemsAsync(CreateClaimsADTO.ClaimId);
         }
 
         public async Task OnAddClaimAClearButtonClick()

@@ -18,5 +18,8 @@ namespace WebApiClaimsA.Repository
 
         [Sql(@"[dbo].[P_CreateClaimA]")]
         Task<Int64> CreateClaimAAsync(ClaimAItemModel claimAItem);
+
+        [Sql(@"SELECT *  FROM [dbo].[ClaimItem] WHERE ClaimId = @claimAId")]
+        Task<List<ClaimAItemModel>> GetClaimItemsAsync(Int64 claimAId);
     }
 }

@@ -27,11 +27,6 @@ namespace WebApiClaimsA.Controllers
         private readonly ILogger<ClaimsAController> _logger;
         private readonly IClaimsRepository _claimsRepository;
 
-        private static readonly string[] Summaries = new[]
-       {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         public ClaimsAController(IMapper mapper, ILogger<ClaimsAController> logger, IClaimsRepository claimsRepository)
         {
             _mapper = mapper;
@@ -63,6 +58,20 @@ namespace WebApiClaimsA.Controllers
             }
 
             return claimAId.Value;
+        }
+
+        [Authorize]
+        [HttpGet("GetClaimItemsAsync")]
+        public async Task<List<CreateClaimsAResModel>> GetClaimItemsAsync(Int64 claimAId)
+        {
+            List<ClaimAItemModel> claimAItems = new List<ClaimAItemModel>();
+            List<CreateClaimsAResModel> claimsAddedRM = new List<CreateClaimsAResModel>();
+
+            claimAItems = await this._claimsRepository.GetClaimItemsAsync(claimAId);
+
+            claimsAddedRM = this._mapper.Map<List<CreateClaimsAResModel>>(claimAItems);
+
+            return claimsAddedRM;
         }
 
         [Authorize]

@@ -4,9 +4,7 @@
         }
 
         publicMethod.showAlert = function () {
-          
         }
-
 
         publicMethod.signedInSuccessfully = function (modalId) {
             const Toast = Swal.mixin({
@@ -36,13 +34,15 @@
             })
         }
 
-
         publicMethod.setActiveNavBar = function (navId) {
             $("#" + navId).addClass("active");
-            //setTimeout(
-            //    function () {
-            //        $("#" + navId).addClass("active");
-            //    }, 1000);
+        }
+
+        publicMethod.loadClaimsAController = function () {
+
+            $.getScript("./jsControllers/claimsAController.js", function (data, textStatus, jqxhr) {              
+              
+            });
         }
     }(window.homeController = window.homeController || {}, jQuery)
 );

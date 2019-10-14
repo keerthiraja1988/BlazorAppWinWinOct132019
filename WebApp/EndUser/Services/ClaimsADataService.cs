@@ -39,8 +39,6 @@ namespace ClientWebAppBlazor.Services
             string url = await _appConfiguration.GetApiUrl("ClaimsAServer");
 
             claimsACount = await _httpClient.GetJsonAsync<Int64>(url + "/api/ClaimsA/GetClaimsCountAsync" + "?userId=" + userId);
-            //string stringJWT = response.Content.ReadAsStringAsync().Result;
-            //claimsACount = JsonConvert.DeserializeObject<Int64>(stringJWT);
 
             return 123;
         }
@@ -70,6 +68,17 @@ namespace ClientWebAppBlazor.Services
             Console.WriteLine("CreateClaimAAsync" + claimsAItemId);
 
             return claimsAItemId;
+        }
+
+        public async Task<List<CreateClaimsAResModel>> GetClaimItemsAsync(Int64 claimAId)
+        {
+            List<CreateClaimsAResModel> createClaimAs = new List<CreateClaimsAResModel>();
+
+            string url = await _appConfiguration.GetApiUrl("ClaimsAServer");
+
+            createClaimAs = await _httpClient.GetJsonAsync<List<CreateClaimsAResModel>>(url + "/api/ClaimsA/GetClaimItemsAsync" + "?claimAId=" + claimAId);
+
+            return createClaimAs;
         }
     }
 }
