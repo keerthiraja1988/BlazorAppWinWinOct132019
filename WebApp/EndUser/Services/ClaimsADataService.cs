@@ -80,5 +80,12 @@ namespace ClientWebAppBlazor.Services
 
             return createClaimAs;
         }
+
+        public async Task DeleteClaimItemsAsync(Int64 claimItemId)
+        {
+            string url = await _appConfiguration.GetApiUrl("ClaimsAServer");
+
+            await _httpClient.DeleteAsync(url + "/api/ClaimsA/DeleteClaimItemsAsync" + "?claimItemid=" + claimItemId);
+        }
     }
 }

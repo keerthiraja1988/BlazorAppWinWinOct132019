@@ -5,24 +5,6 @@
 
 @inherits ClaimsASubmitBase
 
-@code {
-
-    public bool isUserAuthenticated { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await JsRuntime.InvokeVoidAsync("homeController.showLoadingIndicator", "");
-        await OnDashboardLoad();
-        isUserAuthenticated = JwtToken.IsUserAuthenticated;
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await JsRuntime.InvokeVoidAsync("homeController.hideLoadingIndicator", "");
-
-    }
-}
-
 <NavBar JwtToken="@JwtToken" ActivateNav="navItemClaimA">
 </NavBar>
 <div class='container-fluid pt-2'>
@@ -176,7 +158,7 @@
                                                     <button type="button" class="btn btn-secondary mr-2">
                                                         <Icon Class="pr-1" Name="@("fas fa-pen")" />     Edit
                                                     </button>
-                                                    <button type="button" class="btn btn-danger">
+                                                    <button type="button" class="btn btn-danger" @onclick="@(async () => await OnDeleteClaimItemButtonClick(@item.ClaimItemsId))">
                                                         <Icon Class="pr-1" Name="@("far fa-trash-alt")" />     Delete
                                                     </button>
                                                 </div>
@@ -191,5 +173,30 @@
             </div>
         </div>
 
+        <_ConfirmDeleteClaimA AfterConfirmClaimItem="@AfterConfirmClaimItem" ClaimItemId="DeleteClaimItemId" @ref="childConfirmDeleteClaimA">
+        </_ConfirmDeleteClaimA>
     }
 </div>
+
+@code {
+
+    public bool isUserAuthenticated { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await JsRuntime.InvokeVoidAsync("homeController.showLoadingIndicator", "");
+        await OnDashboardLoad();
+        isUserAuthenticated = JwtToken.IsUserAuthenticated;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JsRuntime.InvokeVoidAsync("homeController.hideLoadingIndicator", "");
+
+    }
+
+    public async void AfterConfirmClaimItem(MouseEventArgs e)
+    {
+        await OnDeleteClaimItemConfirm();
+    }
+}

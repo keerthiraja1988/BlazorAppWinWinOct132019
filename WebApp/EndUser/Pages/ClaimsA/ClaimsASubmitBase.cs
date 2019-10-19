@@ -29,6 +29,10 @@ namespace ClientWebAppBlazor.Pages.ClaimsA
 
         public List<CreateClaimsAResModel> ClaimsAdded { get; set; } = new List<CreateClaimsAResModel>();
 
+        public Int64 DeleteClaimItemId { get; set; } = 0;
+
+        public _ConfirmDeleteClaimA childConfirmDeleteClaimA { get; set; }
+
         public async Task OnDashboardLoad()
         {
             await JsRuntime.InvokeVoidAsync("homeController.loadClaimsAController", "");
@@ -77,6 +81,28 @@ namespace ClientWebAppBlazor.Pages.ClaimsA
             }
 
             await JsRuntime.InvokeVoidAsync("homeController.hideLoadingIndicator", "");
+        }
+
+        public async Task OnDeleteClaimItemButtonClick(Int64 claimItemId)
+        {
+            await JsRuntime.InvokeVoidAsync("homeController.showLoadingIndicator", "");
+            DeleteClaimItemId = claimItemId;
+            await childConfirmDeleteClaimA.ShowDeleteConfirmationModal(claimItemId);
+
+            await JsRuntime.InvokeVoidAsync("homeController.hideLoadingIndicator", "");
+            ClaimsAdded = null;
+        }
+
+        public async Task OnDeleteClaimItemConfirm()
+        {
+            //await JsRuntime.InvokeVoidAsync("homeController.showLoadingIndicator", "");
+
+            //await _claimsADataService.DeleteClaimItemsAsync(DeleteClaimItemId);
+            //await childConfirmDeleteClaimA.HideDeleteConfirmationModal();
+
+            await LoadClaimAItems();
+
+            //await JsRuntime.InvokeVoidAsync("homeController.hideLoadingIndicator", "");
         }
 
         public async Task LoadClaimAItems()

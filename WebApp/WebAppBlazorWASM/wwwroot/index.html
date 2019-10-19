@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Claims</title>
+    <base href="/" />
+    <link href="twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/site.css" rel="stylesheet" />
+    <link href="_content/Blazorise/blazorise.css" rel="stylesheet" />
+    <link href="_content/Blazorise.Bootstrap/blazorise.bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+</head>
+<body>
+    <app></app>
+    <div id="myNav" class="overlay" style="height:100%" tabindex='1'>
+        <!-- The overlay -->
+        <style>
+            .overlay {
+                height: 0%;
+                width: 100%;
+                position: fixed;
+                z-index: 99999;
+                top: 0;
+                left: 0;
+                background-color: rgb(0,0,0);
+                background-color: rgba(0, 0, 0, 0.67);
+                overflow-y: hidden;
+                transition: 0.5s;
+            }
+
+            .overlay-content {
+                position: relative;
+                top: 25%;
+                width: 100%;
+                text-align: center;
+                margin-top: 30px;
+            }
+
+            .overlay a {
+                padding: 8px;
+                text-decoration: none;
+                font-size: 36px;
+                color: #818181;
+                display: block;
+                transition: 0.3s;
+            }
+
+                .overlay a:hover, .overlay a:focus {
+                    color: #f1f1f1;
+                }
+
+            .overlay .closebtn {
+                position: absolute;
+                top: 20px;
+                right: 45px;
+                font-size: 60px;
+            }
+        </style>
+
+        <div class="overlay-content row" style="padding-top: 50px;">
+
+            <div class="col-sm-1 col-md-3 col-lg-4 col-xl-4 "></div>
+
+            <div class="col-12 col-sm-10 col-md-6 col-lg-4 col-xl-4 text-center" style="padding-left:50px">
+
+                <div style="margin-bottom:5px" class="lds-roller">
+                    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+                </div>
+                <br />
+
+                <span style="color:white;font-size:25px;">Processing, Please Wait...</span>
+            </div>
+
+            <div class="col-sm-1 col-md-3 col-lg-4 col-xl-4"></div>
+        </div>
+    </div>
+
+    <div id="loadClaimsAController">
+    </div>
+
+    <script src="_framework/blazor.webassembly.js"></script>
+
+    <script src="jquery/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="twitter-bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="_content/Blazorise/blazorise.js"></script>
+    <script src="_content/Blazorise.Bootstrap/blazorise.bootstrap.js"></script>
+
+    <script src="jsControllers/homeController.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+</body>
+</html>
