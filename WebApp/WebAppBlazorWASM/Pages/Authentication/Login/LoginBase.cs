@@ -46,6 +46,7 @@ namespace WebAppBlazorWASM.Pages.Authentication.Login
 
         public async Task OnRegisterUserButtonClick()
         {
+            await _jsRuntime.InvokeVoidAsync("homeController.showLoadingIndicator", "");
             _navigationManager.NavigateTo("Register");
         }
     }

@@ -7,8 +7,19 @@ namespace ResourceModel.Authentication
     public class RegisterUserResModel
     {
         [Required]
-        [StringLength(10, ErrorMessage = "UserName is too long.")]
+        [MinLength(6)]
+        [MaxLength(15)]
         public string UserName { get; set; }
+
+        [Required]
+        [MinLength(4)]
+        [MaxLength(40)]
+        public string FirstName { get; set; }
+
+        [Required]
+        [MinLength(4)]
+        [MaxLength(40)]
+        public string LastName { get; set; }
 
         [Required]
         [EmailAddress(ErrorMessage = "Invalid Email Address")]

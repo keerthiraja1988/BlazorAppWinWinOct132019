@@ -1,0 +1,83 @@
+﻿@page "/Register"
+
+@inherits RegisterUserBase
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        await _jsRuntime.InvokeVoidAsync("homeController.setActiveNavBar", "navItemRegister");
+        await _jsRuntime.InvokeVoidAsync("homeController.hideLoadingIndicator", "");
+
+    }
+}
+
+<NavMenu></NavMenu>
+<div class='container-fluid pt-1'>
+    <div class="row ">
+        <div class="col-1 col-sm-1 col-md-4 col-lg-4 col-xl-4">
+        </div>
+
+        <div class="col-10 col-sm-10 col-md-4 col-lg-4 col-xl-4 ">
+            <EditForm Model="@RegisterUser" OnValidSubmit="@OnRegisterUserButtonClick">
+                <Card Class="mt-3">
+                    <CardHeader>
+                        <div class="text-center">
+                            <h1 class="h3 font-weight-normal">Register</h1>
+                        </div>
+                    </CardHeader>
+                    <CardBody Class="text-left">
+                        <DataAnnotationsValidator />
+                        <div class="form-label-group mb-2">
+                            <label for="inputUserName">User Name</label>
+                            <TextEdit Placeholder="" @bind-Text="@RegisterUser.UserName" Class="form-control" />
+                            <ValidationMessage For="@(() => RegisterUser.UserName)" />
+                        </div>
+
+                        <div class="form-label-group mb-2">
+                            <label for="inputFirstName">First Name</label>
+                            <TextEdit Placeholder="" @bind-Text="@RegisterUser.FirstName" Class="form-control" />
+                            <ValidationMessage For="@(() => RegisterUser.FirstName)" />
+                        </div>
+
+                        <div class="form-label-group mb-2">
+                            <label for="inputLastName">Last Name</label>
+                            <TextEdit Placeholder="" @bind-Text="@RegisterUser.LastName" Class="form-control" />
+                            <ValidationMessage For="@(() => RegisterUser.LastName)" />
+                        </div>
+
+                        <div class="form-label-group mb-2">
+                            <label for="inputUserName">Email Id</label>
+                            <TextEdit Placeholder="" @bind-Text="@RegisterUser.Email" Class="form-control" />
+                            <ValidationMessage For="@(() => RegisterUser.Email)" />
+                        </div>
+
+                        <div class="form-label-group mb-3">
+                            <label for="inputPassword">Password</label>
+                            <InputText id="inputPassword" @bind-Value="@RegisterUser.Password" Class="form-control" type="password" />
+                            <ValidationMessage For="@(() => RegisterUser.Password)" />
+                        </div>
+
+                        <div class="form-label-group mb-3">
+                            <label for="inputConfirmPassword">Confirm Password</label>
+                            <InputText id="inputConfirmPassword" @bind-Value="@RegisterUser.ConfirmPassword" Class="form-control" type="password" />
+                            <ValidationMessage For="@(() => RegisterUser.ConfirmPassword)" />
+                        </div>
+                    </CardBody>
+                    <CardFooter Class="text-center">
+                        <button class="btn btn-primary  mr-2" type="submit">
+                            <Icon Class="pr-1" Name="@(" fas fa-user-plus")" />    Register
+                        </button>
+
+                        <button class="btn btn-secondary" type="button" @onclick="@(async () => await OnLoginUserButtonClick())">
+                            <Icon Name="@(" fas fa-sign-in-alt")" />    Login
+                        </button>
+                    </CardFooter>
+                </Card>
+            </EditForm>
+        </div>
+        <div class="col-1 col-sm-1 col-md-4 col-lg-4 col-xl-4">
+        </div>
+    </div>
+</div>

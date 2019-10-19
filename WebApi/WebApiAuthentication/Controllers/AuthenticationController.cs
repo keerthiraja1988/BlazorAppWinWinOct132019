@@ -19,7 +19,6 @@ namespace WebApiAuthentication.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Produces("application/json")]
-
     public class AuthenticationController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -30,7 +29,6 @@ namespace WebApiAuthentication.Controllers
        {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
-
 
         public AuthenticationController(IMapper mapper, ILogger<AuthenticationController> logger, IAuthenticationRepository authenticationRepository)
         {
@@ -52,9 +50,8 @@ namespace WebApiAuthentication.Controllers
             return userDetailsrm;
         }
 
-
         [HttpPost("RegisterUserAsync")]
-        public async Task<JwtToken> RegisterUserAsync(RegisterUserResModel registerUserResModel)
+        public async Task<UserDetailResModel> RegisterUserAsync(RegisterUserResModel registerUserResModel)
         {
             UserDetailModel userDetail = new UserDetailModel();
             UserDetailResModel userDetailRmReturn = new UserDetailResModel();
@@ -67,10 +64,8 @@ namespace WebApiAuthentication.Controllers
 
             jwtTokenrm = GenerateJwtToken(userDetailRmReturn);
 
-            return jwtTokenrm;
+            return userDetailRmReturn;
         }
-
-
 
         [HttpPost("AuthenticateUser")]
         public async Task<JwtToken> AuthenticateUser(ClientLoginResModel clientLoginResModel)
@@ -104,14 +99,13 @@ namespace WebApiAuthentication.Controllers
         [HttpGet("GetApiUrls")]
         public async Task<List<ApiUrlResModel>> GetApiUrls()
         {
-          
             List<ApiUrlResModel> apiUrls = new List<ApiUrlResModel>();
 
             apiUrls.Add(new ApiUrlResModel { Api = "ClaimsAServer", ApiUrls = new List<string> { "https://localhost:44381" } });
-           
 
             return apiUrls;
         }
+
         private JwtToken GenerateJwtToken(UserDetailResModel userDetailRmReturn)
         {
             JwtToken jwtTokenrm = new JwtToken();
@@ -123,16 +117,15 @@ namespace WebApiAuthentication.Controllers
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, userDetailRmReturn.UserName),
+                    new Claim(ClaimTypes.Name, userDetailRmReturn.FirstName + " "  + userDetailRmReturn.LastName ),
                     new Claim("UserName", userDetailRmReturn.UserName),
                     new Claim("UserId", userDetailRmReturn.UserId.ToString()),
                 }),
-                Expires =  DateTime.UtcNow.AddMinutes(60),
+                Expires = DateTime.UtcNow.AddMinutes(60),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
-
 
             jwtTokenrm.Token = tokenString;
             jwtTokenrm.IsUserAuthenticated = true;

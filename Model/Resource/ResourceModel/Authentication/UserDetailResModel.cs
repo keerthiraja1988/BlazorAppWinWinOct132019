@@ -10,6 +10,10 @@ namespace ResourceModel.Authentication
 
         public string UserName { get; set; }
 
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
         public string Email { get; set; }
 
         public string Password { get; set; }
@@ -27,8 +31,5 @@ namespace ResourceModel.Authentication
         public Int64 ModifiedBy { get; set; }
 
         public JwtToken JwtToken { get; set; } = new JwtToken();
-
-
     }
-
 }

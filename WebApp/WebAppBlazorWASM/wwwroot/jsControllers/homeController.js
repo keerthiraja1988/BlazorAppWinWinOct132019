@@ -1,9 +1,9 @@
 ﻿(
     function (publicMethod, $) {
         publicMethod.pageLoad = function () {
-            //$(".navMenuItem").click(function () {
-            //    homeController.showLoadingIndicator();
-            //});
+            $(".navMenuItem").click(function () {
+                homeController.showLoadingIndicator();
+            });
         }
 
         publicMethod.showAjaxErrorMessagePopUp = function (xMLHttpRequest, textStatus, errorThrown) {
@@ -18,6 +18,10 @@
             $('#messageShowModalMessage').text(message);
         }
 
+        publicMethod.reloadPage = function () {
+            location.reload();
+        }
+
         publicMethod.showLoadingIndicator = function () {
             document.getElementById("myNav").style.height = "100%";
         }
@@ -29,7 +33,7 @@
                 }, 500);
         }
 
-        publicMethod.signedInSuccessfully = function (modalId) {
+        publicMethod.showSuccessToastNotification = function (message) {
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -39,7 +43,7 @@
 
             Toast.fire({
                 type: 'success',
-                title: 'Signed in successfully'
+                title: message
             })
         }
 
@@ -58,7 +62,12 @@
         }
 
         publicMethod.setActiveNavBar = function (navId) {
-            $("#" + navId).addClass("active");
+            $(".navMenuItem").removeClass("active");
+
+            setTimeout(
+                function () {
+                    $("#" + navId).addClass("active");
+                }, 500);
         }
 
         publicMethod.loadClaimsAController = function () {

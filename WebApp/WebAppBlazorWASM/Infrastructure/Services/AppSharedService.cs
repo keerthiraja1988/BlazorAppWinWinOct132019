@@ -35,6 +35,24 @@ namespace WebAppBlazorWASM.Infrastructure.Services
             _appConfigurationService = appConfigurationService;
         }
 
+        public async Task<UserDetailResModel> RegisterUserAsync(RegisterUserResModel registerUser)
+        {
+            UserDetailResModel userDetailResModel = new UserDetailResModel();
+
+            string url = await _appConfigurationService.GetApiUrl("WebApiAuthenticationServer");
+
+            string stringData = JsonConvert.SerializeObject(registerUser);
+            var contentData = new StringContent(stringData, System.Text.Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = await _httpClient.PostAsync
+                            (url + "/api/Authentication/RegisterUserAsync", contentData);
+            string stringJWT = response.Content.
+                                   ReadAsStringAsync().Result;
+            userDetailResModel = JsonConvert.DeserializeObject<UserDetailResModel>(stringJWT);
+
+            return userDetailResModel;
+        }
+
         public async Task<JwtToken> AuthenticateUserAsync(ClientLoginResModel clientLoginResModel)
         {
             JwtToken jwtToken = new JwtToken();
@@ -52,8 +70,7 @@ namespace WebAppBlazorWASM.Infrastructure.Services
             if (jwtToken != null && jwtToken.IsUserAuthenticated)
             {
                 await _localStorage.SetItemAsync("authToken", jwtToken.Token);
-                await _localStorage.SetItemAsync("signedInSuccessfullyNew", "true");
-                await _localStorage.SetItemAsync("signedInSuccessfully", "true");
+                await _localStorage.SetItemAsync("signedInSuccessfullyFlag", "true");
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", jwtToken.Token);
                 await ((AppAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsAuthenticated(jwtToken.Token);
 
@@ -71,8 +88,33 @@ namespace WebAppBlazorWASM.Infrastructure.Services
         public async Task LogoutUser()
         {
             await _localStorage.ClearAsync();
-            await _localStorage.SetItemAsync("loggedOutSuccessfullyNotify", "true");
+            await _localStorage.SetItemAsync("loggedOutSuccessfullyFlag", "true");
             await ((AppAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsLoggedOut();
+        }
+
+        public async Task<JwtToken> GetLoggedInUserDetails()
+        {
+            bool isUserAuthenticated = false;
+            JwtToken jwtToken = new JwtToken();
+            try
+            {
+                string url = await _appConfigurationService.GetApiUrl("WebApiAuthenticationServer");
+
+                AuthenticationState authenticationState = await _authenticationStateProvider.GetAuthenticationStateAsync();
+
+                HttpResponseMessage response = await _httpClient.GetAsync(url + "/api/Authentication/ValidateUserAuthentication");
+                string stringJWT = response.Content.ReadAsStringAsync().Result;
+                isUserAuthenticated = JsonConvert.DeserializeObject<bool>(stringJWT);
+
+                jwtToken = await ((AppAuthenticationStateProvider)_authenticationStateProvider).GetLoggedInUserDetails();
+                jwtToken.IsUserAuthenticated = isUserAuthenticated;
+            }
+            catch (Exception)
+            {
+                _navigationManager.NavigateTo("Login");
+            }
+
+            return jwtToken;
         }
     }
 }

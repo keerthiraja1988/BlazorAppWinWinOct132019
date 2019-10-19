@@ -1,56 +1,59 @@
 ﻿@page "/"
 
+@inherits DashboardBase
+
 @inject IJSRuntime _jsRuntime
-@inject AuthenticationStateProvider _authenticationStateProvider
-@inject NavigationManager _navigationManager
 
 @code {
     protected override async Task OnInitializedAsync()
     {
-        var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
-        var user = authState.User;
-
-        if (user.Identity.IsAuthenticated)
-        {
-
-        }
-        else
-        {
-
-        }
-
         await _jsRuntime.InvokeVoidAsync("homeController.setActiveNavBar", "navItemHome");
+        await OnDashboardLoad();
         await _jsRuntime.InvokeVoidAsync("homeController.hideLoadingIndicator", "");
     }
 }
 
 <NavMenu></NavMenu>
-<div class='container-fluid pt-1'>
+<div class='container-fluid pt-2'>
     <div class="row">
-        <div class="col-md-4 text-center d-flex justify-content-center">
-            <div class="card text-white bg-info mb-3" style="width:500px;">
-                <div class="card-header d-flex justify-content-start pt-1 pb-1" style="font-size: 20px;">Claim-A</div>
+        <div class="col-md-3 text-center d-flex justify-content-center">
+            <div class="card text-white mb-3" style="width:500px; background-color:#2980b9">
+                <div class="card-header d-flex justify-content-start pt-1 pb-1" style="font-size: 18px;">Employees</div>
                 <div class="card-body pt-2 pb-2">
                     <h5 class="card-title" style="font-size:50px">123</h5>
-                    <p class="card-text">Claims Submitted</p>
+                    <p class="card-text">Active Employees</p>
                 </div>
             </div>
         </div>
-        <div class="col-md-4 text-center d-flex justify-content-center">
-            <div class="card text-white bg-info mb-3" style="width:500px;">
-                <div class="card-header d-flex justify-content-start pt-1 pb-1" style="font-size: 20px;">Claim-A</div>
+        <div class="col-md-3 text-center d-flex justify-content-center">
+            <div class="card text-white mb-3" style="width:500px; background-color:#2980b9">
+                <div class="card-header d-flex justify-content-start pt-1 pb-1" style="font-size: 18px;">Yours Requests</div>
                 <div class="card-body pt-2 pb-2">
                     <h5 class="card-title" style="font-size:50px">56</h5>
-                    <p class="card-text">Claims Submitted</p>
+                    <p class="card-text">Active Requests</p>
                 </div>
             </div>
         </div>
-        <div class="col-md-4 text-center d-flex justify-content-center">
-            <div class="card text-white bg-info mb-3" style="width:500px;">
-                <div class="card-header d-flex justify-content-start pt-1 pb-1" style="font-size: 20px;">Claim-A</div>
+        <div class="col-md-3 text-center d-flex justify-content-center">
+            <div class="card text-white mb-3" style="width:500px; background-color:#2980b9">
+                <div class="card-header d-flex justify-content-start pt-1 pb-1" style="font-size: 18px;">
+                    Approvals
+                </div>
                 <div class="card-body pt-2 pb-2">
                     <h5 class="card-title" style="font-size:50px">56</h5>
-                    <p class="card-text">Claims Submitted</p>
+                    <p class="card-text">Pending Approvals</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 text-center d-flex justify-content-center">
+            <div class="card text-white mb-3" style="width:500px; background-color:#2980b9">
+                <div class="card-header d-flex justify-content-start pt-1 pb-1" style="font-size: 18px;">
+                    Users
+                </div>
+                <div class="card-body pt-2 pb-2">
+                    <h5 class="card-title" style="font-size:50px">56</h5>
+                    <p class="card-text">Applicaiton Users</p>
                 </div>
             </div>
         </div>

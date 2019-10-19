@@ -8,6 +8,10 @@ namespace DomainModel
 
         public string UserName { get; set; }
 
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
         public string Email { get; set; }
 
         public string Password { get; set; }
@@ -23,6 +27,5 @@ namespace DomainModel
         public DateTime ModifidOn { get; set; }
 
         public Int64 ModifiedBy { get; set; }
-
     }
 }

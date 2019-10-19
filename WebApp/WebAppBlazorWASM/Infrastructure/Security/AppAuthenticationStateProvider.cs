@@ -85,7 +85,7 @@ namespace WebAppBlazorWASM.Infrastructure.Security
             var keyValuePairs = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonBytes);
 
             keyValuePairs.TryGetValue(ClaimTypes.Role, out object roles);
-            claims.Add(new Claim(ClaimTypes.Name, "John Will"));
+            //claims.Add(new Claim(ClaimTypes.Name, "John Will"));
             if (roles != null)
             {
                 if (roles.ToString().Trim().StartsWith("["))
@@ -106,6 +106,10 @@ namespace WebAppBlazorWASM.Infrastructure.Security
             }
 
             claims.AddRange(keyValuePairs.Select(kvp => new Claim(kvp.Key, kvp.Value.ToString())));
+
+            object name = new object();
+            keyValuePairs.TryGetValue("unique_name", out name);
+            claims.Add(new Claim(ClaimTypes.Name, name.ToString()));
 
             return claims;
         }
