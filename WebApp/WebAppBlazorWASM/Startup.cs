@@ -5,6 +5,7 @@ using Blazorise.Icons.FontAwesome;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using WebAppBlazorWASM.Infrastructure.Security;
 
 namespace WebAppBlazorWASM
 {
@@ -22,7 +23,7 @@ namespace WebAppBlazorWASM
 
             services.AddBlazoredLocalStorage();
             services.AddAuthorizationCore();
-            //services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
+            services.AddScoped<AuthenticationStateProvider, AppAuthenticationStateProvider>();
         }
 
         public void Configure(IComponentsApplicationBuilder app)

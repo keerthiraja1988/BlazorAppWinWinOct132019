@@ -1,0 +1,38 @@
+﻿@page "/Login"
+
+@inherits LoginBase
+
+@inject ILocalStorageService _localStorage
+@inject IJSRuntime _jsRuntime
+@inject AuthenticationStateProvider _authenticationStateProvider
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            Console.WriteLine($"{user.Identity.Name} is authenticated.");
+        }
+        else
+        {
+            Console.WriteLine("The user is NOT authenticated.");
+        }
+    }
+}
+
+<NavMenu></NavMenu>
+<div class='container-fluid pt-1'>
+    <div class="row">
+        <div class="col-1 col-sm-1 col-md-4 col-lg-4 col-xl-4">
+        </div>
+
+        <div class="col-10 col-sm-10 col-md-4 col-lg-4 col-xl-4 text-center">
+            Hello
+        </div>
+        <div class="col-1 col-sm-1 col-md-4 col-lg-4 col-xl-4">
+        </div>
+    </div>
+</div>

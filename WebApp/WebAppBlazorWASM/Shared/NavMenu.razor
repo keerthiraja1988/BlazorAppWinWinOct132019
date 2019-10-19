@@ -1,57 +1,59 @@
-﻿@inject NavigationManager NavigationManager
-@inject IJSRuntime JsRuntime
+﻿@inject NavigationManager _navigationManager
+@inject IJSRuntime _jsRuntime
 
-@if (true)
-{
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand navMenuItem" href="">Claims</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+<AuthorizeView>
+    <Authorized>
 
-        <div class="collapse navbar-collapse pl-2" id="navbarAuth">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link navMenuItem" href="Login" id="navItemLogin">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link navMenuItem" href="Register" id="navItemRegister">Register</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-}
-else
-{
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand navMenuItem" href="">Claims</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand navMenuItem" href="">Claims</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="collapse navbar-collapse pl-2" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link navMenuItem" href="" id="navItemHome">Home</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a id="navItemClaimA" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Claim-A
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item navMenuItem" href="ClaimsASubmit">Open Claim-A</a>
-                        <a class="dropdown-item navMenuItem" href="#">Claim-A History</a>
-                    </div>
-                </li>
-            </ul>
+            <div class="collapse navbar-collapse pl-2" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link navMenuItem" href="" id="navItemHome">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a id="navItemClaimA" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Claim-A
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item navMenuItem" href="ClaimsASubmit">Open Claim-A</a>
+                            <a class="dropdown-item navMenuItem" href="#">Claim-A History</a>
+                        </div>
+                    </li>
+                </ul>
 
-            <form class="form-inline my-2 my-lg-0">
-                @*<h6 class="pr-4 pt-1" style="color: white;font-size: 20px;">@JwtToken.UserName</h6>
+                <form class="form-inline my-2 my-lg-0">
+                    @*<h6 class="pr-4 pt-1" style="color: white;font-size: 20px;">@JwtToken.UserName</h6>
 
-                    <button type="button" class="btn btn-danger navMenuItem" @onclick="@(async () => await LogoutUser())">
-                        <Icon Class="" Name="@("fas fa-power-off")" />
-                    </button>*@
-            </form>
-        </div>
-    </nav>
-}
+                        <button type="button" class="btn btn-danger navMenuItem" @onclick="@(async () => await LogoutUser())">
+                            <Icon Class="" Name="@("fas fa-power-off")" />
+                        </button>*@
+                </form>
+            </div>
+        </nav>
+    </Authorized>
+    <NotAuthorized>
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand navMenuItem" href="">Claims</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse pl-2" id="navbarAuth">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link navMenuItem" href="Login" id="navItemLogin">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link navMenuItem" href="Register" id="navItemRegister">Register</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </NotAuthorized>
+</AuthorizeView>
