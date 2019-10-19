@@ -12,9 +12,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using WebApiAuthentication.Repository;
+using WebApiEmployeeManage.Repository;
 
-namespace WebApiAuthentication.Controllers
+namespace WebApiEmployeeManage.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
