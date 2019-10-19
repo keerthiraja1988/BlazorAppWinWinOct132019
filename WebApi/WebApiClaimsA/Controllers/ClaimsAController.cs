@@ -11,6 +11,8 @@ using ResourceModel.ClaimsA.Create;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -87,6 +89,13 @@ namespace WebApiClaimsA.Controllers
             claimAItemid = await this._claimsRepository.CreateClaimAAsync(claimAItem);
 
             return claimAItemid;
+        }
+
+        [Authorize]
+        [HttpDelete("DeleteClaimItemsAsync")]
+        public async Task DeleteClaimItemsAsync(Int64 claimItemid)
+        {
+            await this._claimsRepository.DeleteClaimItemsAsync(claimItemid);
         }
     }
 }

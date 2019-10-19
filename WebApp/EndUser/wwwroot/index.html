@@ -12,7 +12,70 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 </head>
 <body>
-    <app>Loading...</app>
+    <app></app>
+    <div id="myNav" class="overlay" style="height:100%" tabindex='1'>
+        <!-- The overlay -->
+        <style>
+            .overlay {
+                height: 0%;
+                width: 100%;
+                position: fixed;
+                z-index: 99999;
+                top: 0;
+                left: 0;
+                background-color: rgb(0,0,0);
+                background-color: rgba(0, 0, 0, 0.67);
+                overflow-y: hidden;
+                transition: 0.5s;
+            }
+
+            .overlay-content {
+                position: relative;
+                top: 25%;
+                width: 100%;
+                text-align: center;
+                margin-top: 30px;
+            }
+
+            .overlay a {
+                padding: 8px;
+                text-decoration: none;
+                font-size: 36px;
+                color: #818181;
+                display: block;
+                transition: 0.3s;
+            }
+
+                .overlay a:hover, .overlay a:focus {
+                    color: #f1f1f1;
+                }
+
+            .overlay .closebtn {
+                position: absolute;
+                top: 20px;
+                right: 45px;
+                font-size: 60px;
+            }
+        </style>
+
+        <div class="overlay-content row" style="padding-top: 50px;">
+
+
+            <div class="col-sm-1 col-md-3 col-lg-4 col-xl-4 "></div>
+
+            <div class="col-12 col-sm-10 col-md-6 col-lg-4 col-xl-4 text-center" style="padding-left:50px">
+
+                <div style="margin-bottom:5px" class="lds-roller">
+                    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+                </div>
+                <br />
+
+                <span style="color:white;font-size:25px;">Processing, Please Wait...</span>
+            </div>
+
+            <div class="col-sm-1 col-md-3 col-lg-4 col-xl-4"></div>
+        </div>
+    </div>
 
     <div id="loadClaimsAController">
     </div>

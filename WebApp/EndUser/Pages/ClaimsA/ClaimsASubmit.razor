@@ -11,10 +11,16 @@
 
     protected override async Task OnInitializedAsync()
     {
+        await JsRuntime.InvokeVoidAsync("homeController.showLoadingIndicator", "");
         await OnDashboardLoad();
         isUserAuthenticated = JwtToken.IsUserAuthenticated;
     }
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JsRuntime.InvokeVoidAsync("homeController.hideLoadingIndicator", "");
+
+    }
 }
 
 <NavBar JwtToken="@JwtToken" ActivateNav="navItemClaimA">
@@ -150,6 +156,7 @@
                                         <th>Product Cost</th>
                                         <th>Claim Reason</th>
                                         <th>Comments</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -164,6 +171,16 @@
 
                                             <td>@item.ReasonId</td>
                                             <td>@item.Comments</td>
+                                            <td>
+                                                <div class="d-flex justify-content-center">
+                                                    <button type="button" class="btn btn-secondary mr-2">
+                                                        <Icon Class="pr-1" Name="@("fas fa-pen")" />     Edit
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger">
+                                                        <Icon Class="pr-1" Name="@("far fa-trash-alt")" />     Delete
+                                                    </button>
+                                                </div>
+                                            </td>
                                         </tr>
                                     }
                                 </tbody>

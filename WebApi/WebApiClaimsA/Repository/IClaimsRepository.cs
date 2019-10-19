@@ -21,5 +21,8 @@ namespace WebApiClaimsA.Repository
 
         [Sql(@"SELECT *  FROM [dbo].[ClaimItem] WHERE ClaimId = @claimAId")]
         Task<List<ClaimAItemModel>> GetClaimItemsAsync(Int64 claimAId);
+
+        [Sql(@"DELETE FROM [dbo].[ClaimItem] WHERE ClaimItemsId = @claimItemid")]
+        Task DeleteClaimItemsAsync(Int64 claimItemid);
     }
 }

@@ -25,6 +25,8 @@ namespace ClientWebAppBlazor.Infrastructure
             List<AppConfigurationValue> items = new List<AppConfigurationValue>();
             List<ApiUrlResModel> apiUrls = new List<ApiUrlResModel>();
 
+            await _localStorage.RemoveItemAsync("Apis");
+
             items = await _httpClient.GetJsonAsync<List<AppConfigurationValue>>("sample-data/appsettings.json");
 
             apiUrls.Add(new ApiUrlResModel { Api = "WebApiAuthenticationServer", ApiUrls = new List<string>() { items.Where(x => x.Key == "WebApiAuthenticationServer").FirstOrDefault().Value } });
@@ -36,7 +38,7 @@ namespace ClientWebAppBlazor.Infrastructure
                 urls = urls.Where(x => x.Api != "WebApiAuthenticationServer").ToList();
                 apiUrls.AddRange(urls);
             }
-            await _localStorage.RemoveItemAsync("Apis");
+
             await _localStorage.SetItemAsync("Apis", apiUrls);
 
             return true;

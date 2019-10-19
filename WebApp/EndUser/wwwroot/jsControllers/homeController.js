@@ -1,9 +1,26 @@
 ﻿(
     function (publicMethod, $) {
+        publicMethod.pageLoad = function () {
+            //$(".navMenuItem").click(function () {
+            //    homeController.showLoadingIndicator();
+            //});
+        }
+
         publicMethod.showAjaxErrorMessagePopUp = function (xMLHttpRequest, textStatus, errorThrown) {
         }
 
         publicMethod.showAlert = function () {
+        }
+
+        publicMethod.showLoadingIndicator = function () {
+            document.getElementById("myNav").style.height = "100%";
+        }
+
+        publicMethod.hideLoadingIndicator = function () {
+            setTimeout(
+                function () {
+                    document.getElementById("myNav").style.height = "0%";
+                }, 500);
         }
 
         publicMethod.signedInSuccessfully = function (modalId) {
@@ -39,9 +56,7 @@
         }
 
         publicMethod.loadClaimsAController = function () {
-
-            $.getScript("./jsControllers/claimsAController.js", function (data, textStatus, jqxhr) {              
-              
+            $.getScript("./jsControllers/claimsAController.js", function (data, textStatus, jqxhr) {
             });
         }
     }(window.homeController = window.homeController || {}, jQuery)

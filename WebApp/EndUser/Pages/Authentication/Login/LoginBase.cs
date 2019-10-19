@@ -23,16 +23,18 @@ namespace ClientWebAppBlazor.Pages.Login
 
         public ClientLoginResModel ClientLoginResModel { get; set; } = new ClientLoginResModel();
 
-        public Modal LoginFailedModel { get; set; } = new Modal() ;
+        public Modal LoginFailedModel { get; set; } = new Modal();
 
         public async Task OnAuthenticateUserButtonClick()
         {
+            await JsRuntime.InvokeVoidAsync("homeController.showLoadingIndicator", "");
             JwtToken jwtToken = new JwtToken();
             jwtToken = await this._authenticationDataAccess.AuthenticateUserAsync(ClientLoginResModel);
 
             if (jwtToken == null || !jwtToken.IsUserAuthenticated)
             {
                 LoginFailedModel.Show();
+                await JsRuntime.InvokeVoidAsync("homeController.hideLoadingIndicator", "");
             }
             else
             {
@@ -42,7 +44,6 @@ namespace ClientWebAppBlazor.Pages.Login
 
         public async Task HideLoginFailedModel()
         {
-
             LoginFailedModel.Hide();
         }
 

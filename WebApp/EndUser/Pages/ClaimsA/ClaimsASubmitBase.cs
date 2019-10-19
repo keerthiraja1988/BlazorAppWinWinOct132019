@@ -47,6 +47,8 @@ namespace ClientWebAppBlazor.Pages.ClaimsA
 
         public async Task OnCreateClaimAButtonClick()
         {
+            await JsRuntime.InvokeVoidAsync("homeController.showLoadingIndicator", "");
+
             if (CreateClaimsADTO.ClaimId == 0)
             {
                 CreateClaimsADTO.ClaimId = await _claimsADataService.GetOpenClaimIdAsync(JwtToken.UserId);
@@ -73,6 +75,8 @@ namespace ClientWebAppBlazor.Pages.ClaimsA
                 await JsRuntime.InvokeVoidAsync("claimsAController.claimsItemAddedSuccessfully", "");
                 await LoadClaimAItems();
             }
+
+            await JsRuntime.InvokeVoidAsync("homeController.hideLoadingIndicator", "");
         }
 
         public async Task LoadClaimAItems()

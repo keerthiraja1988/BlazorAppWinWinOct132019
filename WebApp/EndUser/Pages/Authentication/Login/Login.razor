@@ -1,28 +1,34 @@
-﻿
-@page "/Login"
+﻿@page "/Login"
 
 @using FluentValidation.Resources
 @using ResourceModel.Authentication
 @using ClientWebAppBlazor.Pages.Login
-@inject ILocalStorageService _localStorage
 
+@inject ILocalStorageService _localStorage
+@inject IJSRuntime JsRuntime
 
 @inherits LoginBase
-
-
 
 @code {
     JwtToken JwtToken = new JwtToken();
 
     protected override async Task OnInitializedAsync()
     {
-        string loggedOutSuccessfully = await _localStorage.GetItemAsync<string>("loggedOutSuccessfully");
+        await JsRuntime.InvokeVoidAsync("homeController.showLoadingIndicator", "");
+        string loggedOutSuccessfully = await _localStorage.GetItemAsync<string>
+    ("loggedOutSuccessfully");
 
         if (!string.IsNullOrEmpty(loggedOutSuccessfully) && loggedOutSuccessfully == "true")
         {
             await JsRuntime.InvokeVoidAsync("homeController.loggedOutSuccessfully", "");
             await _localStorage.RemoveItemAsync("loggedOutSuccessfully");
         }
+
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JsRuntime.InvokeVoidAsync("homeController.hideLoadingIndicator", "");
     }
 }
 
@@ -32,7 +38,6 @@
 
     <div class="row">
         <div class="col-md-4">
-
         </div>
 
         <div class="col-md-4">
@@ -47,15 +52,11 @@
 
                         <DataAnnotationsValidator />
 
-
-
                         <div class="form-label-group mb-2">
                             <label for="inputUserName">User Name</label>
                             <InputText id="inputUserName" @bind-Value="@ClientLoginResModel.UserName" Class="form-control" />
 
                             <ValidationMessage For="@(() => ClientLoginResModel.UserName)" Class="lead" />
-
-
                         </div>
 
                         <div class="form-label-group mb-3">
@@ -63,16 +64,15 @@
                             <InputText id="inputPassword" @bind-Value="@ClientLoginResModel.Password" Class="form-control" type="password" />
                             <ValidationMessage For="@(() => ClientLoginResModel.Password)" />
                         </div>
-
                     </CardBody>
                     <CardFooter>
                         <div class="form-label-group text-center">
                             <button class="btn btn-primary  mr-2" type="submit">
-                                <Icon Class="pr-1" Name="@("fas fa-sign-in-alt")" />    Login
+                                <Icon Class="pr-1" Name="@(" fas fa-sign-in-alt")" />    Login
                             </button>
 
                             <button class="btn btn-secondary" type="button" @onclick="@(async () => await OnRegisterUserButtonClick())">
-                                <Icon Class="pr-1" Name="@("fas fa-user-plus")" />    Register
+                                <Icon Class="pr-1" Name="@(" fas fa-user-plus")" />    Register
                             </button>
                         </div>
                     </CardFooter>
@@ -80,14 +80,8 @@
             </EditForm>
         </div>
         <div class="col-md-4">
-
         </div>
     </div>
-
-
-
-
-
 
     <Modal @ref="LoginFailedModel" Class="loginFailedModel" Style="">
         <ModalBackdrop />
@@ -104,5 +98,4 @@
             </ModalFooter>
         </ModalContent>
     </Modal>
-
 </div>
