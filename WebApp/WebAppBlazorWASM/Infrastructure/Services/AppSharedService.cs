@@ -1,6 +1,7 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.JSInterop;
 using Newtonsoft.Json;
 using ResourceModel.Api;
 using ResourceModel.Authentication;
@@ -20,19 +21,21 @@ namespace WebAppBlazorWASM.Infrastructure.Services
         private readonly ILocalStorageService _localStorage;
         private readonly AuthenticationStateProvider _authenticationStateProvider;
         private readonly NavigationManager _navigationManager;
-
+        private readonly IJSRuntime _jsRuntime;
         private readonly AppConfigurationService _appConfigurationService;
 
         public AppSharedService(HttpClient httpClient,
                       AuthenticationStateProvider authenticationStateProvider,
                       ILocalStorageService localStorage, NavigationManager navigationManager
-                      , AppConfigurationService appConfigurationService)
+                      , AppConfigurationService appConfigurationService
+                      , IJSRuntime jsRuntime)
         {
             _httpClient = httpClient;
             _authenticationStateProvider = authenticationStateProvider;
             _localStorage = localStorage;
             _navigationManager = navigationManager;
             _appConfigurationService = appConfigurationService;
+            _jsRuntime = jsRuntime;
         }
 
         public async Task<UserDetailResModel> RegisterUserAsync(RegisterUserResModel registerUser)
@@ -111,7 +114,8 @@ namespace WebAppBlazorWASM.Infrastructure.Services
             }
             catch (Exception)
             {
-                _navigationManager.NavigateTo("Login");
+                await LogoutUser();
+                await _jsRuntime.InvokeVoidAsync("homeController.redirectToPage", "Login");
             }
 
             return jwtToken;

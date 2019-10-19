@@ -1,7 +1,11 @@
 ﻿(
     function (publicMethod, $) {
         publicMethod.pageLoad = function () {
-            $(".navMenuItem").click(function () {
+            //$(".navMenuItem").click(function () {
+            //    homeController.showLoadingIndicator();
+            //});
+
+            $(window).on('hashchange', function (e) {
                 homeController.showLoadingIndicator();
             });
         }
@@ -20,6 +24,10 @@
 
         publicMethod.reloadPage = function () {
             location.reload();
+        }
+
+        publicMethod.redirectToPage  = function (url) {
+            window.location.href = "/" + url;
         }
 
         publicMethod.showLoadingIndicator = function () {

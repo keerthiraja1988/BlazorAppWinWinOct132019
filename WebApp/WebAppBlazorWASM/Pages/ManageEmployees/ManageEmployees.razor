@@ -1,0 +1,15 @@
+﻿@page "/ManageEmployees"
+
+@inject IJSRuntime _jsRuntime
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await _jsRuntime.InvokeVoidAsync("homeController.setActiveNavBar", "navItemEmployee");
+
+        await _jsRuntime.InvokeVoidAsync("homeController.hideLoadingIndicator", "");
+    }
+}
+<NavMenu></NavMenu>
+
+<h3>Manage Employees</h3>

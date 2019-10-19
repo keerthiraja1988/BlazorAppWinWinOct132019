@@ -25,11 +25,6 @@ namespace WebApiAuthentication.Controllers
         private readonly ILogger<AuthenticationController> _logger;
         private readonly IAuthenticationRepository _authenticationRepository;
 
-        private static readonly string[] Summaries = new[]
-       {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         public AuthenticationController(IMapper mapper, ILogger<AuthenticationController> logger, IAuthenticationRepository authenticationRepository)
         {
             _mapper = mapper;
@@ -121,7 +116,7 @@ namespace WebApiAuthentication.Controllers
                     new Claim("UserName", userDetailRmReturn.UserName),
                     new Claim("UserId", userDetailRmReturn.UserId.ToString()),
                 }),
-                Expires = DateTime.UtcNow.AddMinutes(60),
+                Expires = DateTime.UtcNow.AddSeconds(10),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);

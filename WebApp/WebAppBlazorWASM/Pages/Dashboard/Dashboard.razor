@@ -3,6 +3,7 @@
 @inherits DashboardBase
 
 @inject IJSRuntime _jsRuntime
+@inject NavigationManager _navigationManager
 
 @code {
     protected override async Task OnInitializedAsync()
@@ -11,13 +12,19 @@
         await OnDashboardLoad();
         await _jsRuntime.InvokeVoidAsync("homeController.hideLoadingIndicator", "");
     }
+
+    public async Task NavigateToPage(string page)
+    {
+        await _jsRuntime.InvokeVoidAsync("homeController.showLoadingIndicator", "");
+        _navigationManager.NavigateTo(page);
+    }
 }
 
 <NavMenu></NavMenu>
 <div class='container-fluid pt-2'>
     <div class="row">
         <div class="col-md-3 text-center d-flex justify-content-center">
-            <div class="card text-white mb-3" style="width:500px; background-color:#2980b9">
+            <div class="card text-white mb-3" style="width:500px; background-color:#2980b9;cursor:pointer" @onclick="@(async () => await NavigateToPage("ManageEmployees"))">
                 <div class="card-header d-flex justify-content-start pt-1 pb-1" style="font-size: 18px;">Employees</div>
                 <div class="card-body pt-2 pb-2">
                     <h5 class="card-title" style="font-size:50px">123</h5>

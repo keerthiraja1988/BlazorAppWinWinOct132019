@@ -1,11 +1,18 @@
-﻿@inject NavigationManager _navigationManager
+﻿@using ResourceModel.Authentication
+
+@inject NavigationManager _navigationManager
 @inject IJSRuntime _jsRuntime
 @inject AuthenticationStateProvider _authenticationStateProvider
 @inject AppSharedService _appSharedService
+
 @code {
 
     [CascadingParameter]
-    private Task<AuthenticationState> authenticationStateTask { get; set; }
+    private Task<AuthenticationState>
+    authenticationStateTask
+    { get; set; }
+
+    public JwtToken jwtToken { get; set; } = new JwtToken();
 
     protected override async Task OnInitializedAsync()
     {
@@ -15,6 +22,7 @@
 
         if (user.Identity.IsAuthenticated)
         {
+            jwtToken = await _appSharedService.GetLoggedInUserDetails();
         }
         else if (!user.Identity.IsAuthenticated && (_navigationManager.Uri.EndsWith("/Login") || _navigationManager.Uri.EndsWith("/Register")))
         {
@@ -22,9 +30,10 @@
         }
         else
         {
-            _navigationManager.NavigateTo("Login");
-
+            await _appSharedService.LogoutUser();
+            await _jsRuntime.InvokeVoidAsync("homeController.redirectToPage", "Login");
         }
+
         await _jsRuntime.InvokeVoidAsync("homeController.pageLoad", "");
 
         await _jsRuntime.InvokeVoidAsync("homeController.hideLoadingIndicator", "");
@@ -37,8 +46,7 @@
 
         await this._appSharedService.LogoutUser();
 
-        await _jsRuntime.InvokeVoidAsync("homeController.reloadPage", "");
-
+        await _jsRuntime.InvokeVoidAsync("homeController.redirectToPage", "Login");
     }
 }
 
@@ -56,14 +64,13 @@
                     <li class="nav-item">
                         <a class="nav-link navMenuItem" href="" id="navItemHome">Home</a>
                     </li>
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown" id="navItemEmployee">
                         <a id="navItemClaimA" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Employee
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item navMenuItem" href="CreateEmployee">Create</a>
-                            <a class="dropdown-item navMenuItem" href="#">Update</a>
-                            <a class="dropdown-item navMenuItem" href="#">Delete</a>
+                            <a class="dropdown-item navMenuItem" href="CreateEmployee" id="navItemCreateEmployee">Create</a>
+                            <a class="dropdown-item navMenuItem" href="ManageEmployees" id="navItemManageEmployees">Manage</a>
                         </div>
                     </li>
                 </ul>

@@ -8,9 +8,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebAppBlazorWASM.Infrastructure.Services;
 
-namespace WebAppBlazorWASM.Pages.Dashboard
+namespace WebAppBlazorWASM.Pages.ManageEmployees
 {
-    public class DashboardBase : ComponentBase
+    public class CreateEmployeeBase : ComponentBase
     {
         [Inject]
         protected AppSharedService _appSharedService { get; set; }
@@ -23,13 +23,9 @@ namespace WebAppBlazorWASM.Pages.Dashboard
 
         public JwtToken jwtToken { get; set; } = new JwtToken();
 
-        public async Task OnDashboardLoad()
+        public async Task OnCreateEmployeeLoad()
         {
-            if (await _localStorage.GetItemAsync<string>("signedInSuccessfullyFlag") == "true")
-            {
-                await _jsRuntime.InvokeVoidAsync("homeController.showSuccessToastNotification", "Logged in successfully");
-                await _localStorage.RemoveItemAsync("signedInSuccessfullyFlag");
-            }
+            jwtToken = await _appSharedService.GetLoggedInUserDetails();
         }
     }
 }
