@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>Claims</title>
+    <title>Employee Management</title>
     <base href="/" />
     <link href="twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/site.css" rel="stylesheet" />
@@ -12,8 +12,9 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 </head>
 <body>
-    <app></app>
-    <div id="myNav" class="overlay" style="height:0%" tabindex='1'>
+    <app>
+    </app>
+    <div id="myNav" class="overlay" style="height:100%" tabindex='1'>
         <!-- The overlay -->
         <style>
             .overlay {
@@ -73,6 +74,29 @@
             </div>
 
             <div class="col-sm-1 col-md-3 col-lg-4 col-xl-4"></div>
+        </div>
+    </div>
+
+
+
+    <div class="modal-body">
+        <div class="modal fade" id="messageShowModal" data-backdrop="static" data-keyboard="false" style="z-index: 999999;">
+            <div class="modal-dialog" role="document" style="z-index: 999999;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Mesage</h5>
+                    </div>
+                    <div class="modal-body">
+                        <span id="messageShowModalMessage"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            <i class="fas fa-times"></i>
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

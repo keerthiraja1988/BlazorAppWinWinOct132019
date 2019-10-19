@@ -3,6 +3,16 @@
     font-size: 13px;
 }
 
+.fa, .far, .fas {
+    padding-right: 8px;
+}
+
+.modal-backdrop {
+    
+    z-index: 1045 !important;
+   
+}
+
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;

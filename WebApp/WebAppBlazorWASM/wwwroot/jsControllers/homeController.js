@@ -13,6 +13,11 @@
             alert(message);
         }
 
+        publicMethod.messageShowModal = function (message) {
+            $('#messageShowModal').modal('show');
+            $('#messageShowModalMessage').text(message);
+        }
+
         publicMethod.showLoadingIndicator = function () {
             document.getElementById("myNav").style.height = "100%";
         }

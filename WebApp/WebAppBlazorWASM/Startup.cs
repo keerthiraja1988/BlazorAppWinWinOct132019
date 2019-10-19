@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using WebAppBlazorWASM.Infrastructure.Security;
+using WebAppBlazorWASM.Infrastructure.Services;
 
 namespace WebAppBlazorWASM
 {
@@ -23,7 +24,10 @@ namespace WebAppBlazorWASM
 
             services.AddBlazoredLocalStorage();
             services.AddAuthorizationCore();
-            services.AddScoped<AuthenticationStateProvider, AppAuthenticationStateProvider>();
+            services.AddSingleton<AuthenticationStateProvider, AppAuthenticationStateProvider>();
+
+            services.AddSingleton<AppSharedService>();
+            services.AddSingleton<AppConfigurationService>();
         }
 
         public void Configure(IComponentsApplicationBuilder app)

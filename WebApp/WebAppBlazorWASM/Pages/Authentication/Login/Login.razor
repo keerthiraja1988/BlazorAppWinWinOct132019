@@ -5,21 +5,27 @@
 @inject ILocalStorageService _localStorage
 @inject IJSRuntime _jsRuntime
 @inject AuthenticationStateProvider _authenticationStateProvider
+@inject NavigationManager _navigationManager
 
 @code {
+
     protected override async Task OnInitializedAsync()
     {
+
         var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
         var user = authState.User;
 
         if (user.Identity.IsAuthenticated)
         {
-            Console.WriteLine($"{user.Identity.Name} is authenticated.");
+            _navigationManager.NavigateTo("");
         }
         else
         {
-            Console.WriteLine("The user is NOT authenticated.");
+
         }
+        await _jsRuntime.InvokeVoidAsync("homeController.setActiveNavBar", "navItemLogin");
+        await _jsRuntime.InvokeVoidAsync("homeController.hideLoadingIndicator", "");
+
     }
 }
 
@@ -30,7 +36,43 @@
         </div>
 
         <div class="col-10 col-sm-10 col-md-4 col-lg-4 col-xl-4 text-center">
-            Hello
+            <EditForm Model="@ClientLoginResModel" OnValidSubmit="@OnAuthenticateUserButtonClick">
+                <Card Class="mt-3">
+                    <CardHeader>
+                        <div class="text-center">
+                            <h1 class="h3 font-weight-normal">Login</h1>
+                        </div>
+                    </CardHeader>
+                    <CardBody Class="text-left">
+
+                        <DataAnnotationsValidator />
+
+                        <div class="form-label-group mb-2">
+                            <label for="inputUserName">User Name</label>
+                            <InputText id="inputUserName" @bind-Value="@ClientLoginResModel.UserName" Class="form-control" />
+
+                            <ValidationMessage For="@(() => ClientLoginResModel.UserName)" Class="lead" />
+                        </div>
+
+                        <div class="form-label-group mb-3">
+                            <label for="inputPassword">Password</label>
+                            <InputText id="inputPassword" @bind-Value="@ClientLoginResModel.Password" Class="form-control" type="password" />
+                            <ValidationMessage For="@(() => ClientLoginResModel.Password)" />
+                        </div>
+                    </CardBody>
+                    <CardFooter>
+                        <div class="form-label-group text-center">
+                            <button class="btn btn-primary  mr-2" type="submit">
+                                <Icon Class="pr-1" Name="@(" fas fa-sign-in-alt")" />    Login
+                            </button>
+
+                            <button class="btn btn-secondary" type="button" @onclick="@(async () => await OnRegisterUserButtonClick())">
+                                <Icon Class="pr-1" Name="@(" fas fa-user-plus")" />    Register
+                            </button>
+                        </div>
+                    </CardFooter>
+                </Card>
+            </EditForm>
         </div>
         <div class="col-1 col-sm-1 col-md-4 col-lg-4 col-xl-4">
         </div>

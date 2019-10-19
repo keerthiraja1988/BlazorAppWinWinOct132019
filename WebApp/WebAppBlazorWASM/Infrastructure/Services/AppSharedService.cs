@@ -67,5 +67,12 @@ namespace WebAppBlazorWASM.Infrastructure.Services
 
             return jwtToken;
         }
+
+        public async Task LogoutUser()
+        {
+            await _localStorage.ClearAsync();
+            await _localStorage.SetItemAsync("loggedOutSuccessfullyNotify", "true");
+            await ((AppAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsLoggedOut();
+        }
     }
 }
