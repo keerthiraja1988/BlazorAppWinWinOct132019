@@ -22,7 +22,11 @@ namespace WebApiAuthentication
              .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseStartup<Startup>()
+                     .ConfigureKestrel(options =>
+                     {
+                         options.AllowSynchronousIO = true;
+                     });
                 });
     }
 }

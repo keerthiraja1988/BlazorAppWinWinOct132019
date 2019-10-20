@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.SqlClient;
@@ -7,6 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Autofac;
 using AutoMapper;
+using ElmahCore;
+using ElmahCore.Mvc;
+using ElmahCore.Sql;
 using Insight.Database;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -48,6 +51,11 @@ namespace WebApiAuthentication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddElmah<SqlErrorLog>(options =>
+            {
+                options.ConnectionString = "Data Source=.;Initial Catalog=BlazorAppWinWin;Integrated Security=True;Persist Security Info=true;"; // DB structure see here: https://bitbucket.org/project-elmah/main/downloads/ELMAH-1.2-db-SQLServer.sql
+            });
+
             services.AddControllers(options =>
             {
                 options.RespectBrowserAcceptHeader = true; // false by default
@@ -55,7 +63,6 @@ namespace WebApiAuthentication
             {
                 // Use the default property (Pascal) casing
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();
-
             });
 
             services.AddSwaggerGen(c =>
@@ -82,9 +89,8 @@ namespace WebApiAuthentication
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
 
-            
             // configure jwt authentication
-        
+
             var key = Encoding.ASCII.GetBytes("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9");
             services.AddAuthentication(x =>
             {
@@ -105,7 +111,6 @@ namespace WebApiAuthentication
                     ValidateAudience = false
                 };
             });
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -115,6 +120,7 @@ namespace WebApiAuthentication
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseElmah();
             app.UseCors("AllowAll");
 
             app.UseSwagger();

@@ -12,11 +12,6 @@
     protected override async Task OnInitializedAsync()
     {
 
-        if (await _localStorage.GetItemAsync<string>("loggedOutSuccessfullyFlag") == "true")
-        {
-            await _jsRuntime.InvokeVoidAsync("homeController.showSuccessToastNotification", "Logged out successfully");
-            await _localStorage.RemoveItemAsync("loggedOutSuccessfullyFlag");
-        }
         await _jsRuntime.InvokeVoidAsync("homeController.setActiveNavBar", "navItemLogin");
         await _jsRuntime.InvokeVoidAsync("homeController.hideLoadingIndicator", "");
 

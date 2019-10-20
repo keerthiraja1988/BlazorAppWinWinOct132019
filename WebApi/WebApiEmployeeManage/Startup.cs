@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.SqlClient;
@@ -7,6 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Autofac;
 using AutoMapper;
+using ElmahCore;
+using ElmahCore.Mvc;
+using ElmahCore.Sql;
 using Insight.Database;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -48,6 +51,11 @@ namespace WebApiEmployeeManage
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddElmah<SqlErrorLog>(options =>
+            {
+                options.ConnectionString = "Data Source=.;Initial Catalog=BlazorAppWinWin;Integrated Security=True;Persist Security Info=true;"; // DB structure see here: https://bitbucket.org/project-elmah/main/downloads/ELMAH-1.2-db-SQLServer.sql
+            });
+
             services.AddControllers(options =>
             {
                 options.RespectBrowserAcceptHeader = true; // false by default
@@ -59,7 +67,7 @@ namespace WebApiEmployeeManage
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApi-Authentication", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApi-EmployeeManage", Version = "v1" });
             });
 
             services.AddCors(options =>
@@ -112,6 +120,7 @@ namespace WebApiEmployeeManage
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseElmah();
             app.UseCors("AllowAll");
 
             app.UseSwagger();

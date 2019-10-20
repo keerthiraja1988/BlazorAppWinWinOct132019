@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DomainModel;
+using ElmahCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -126,6 +127,12 @@ namespace WebApiEmployeeManage.Controllers
             jwtTokenrm.IsUserAuthenticated = true;
 
             return jwtTokenrm;
+        }
+
+        [HttpGet("Test")]
+        public async Task Test()
+        {
+            throw new Exception();
         }
     }
 }

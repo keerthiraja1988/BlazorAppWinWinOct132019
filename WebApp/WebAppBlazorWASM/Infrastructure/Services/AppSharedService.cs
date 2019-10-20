@@ -91,7 +91,7 @@ namespace WebAppBlazorWASM.Infrastructure.Services
         public async Task LogoutUser()
         {
             await _localStorage.ClearAsync();
-            await _localStorage.SetItemAsync("loggedOutSuccessfullyFlag", "true");
+
             await ((AppAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsLoggedOut();
         }
 
