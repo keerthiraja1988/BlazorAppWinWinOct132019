@@ -10,9 +10,9 @@ namespace DomainModel.EmployeeManage
 
         public long? EmployeeId { get; set; }
 
-        public short? EmpAppOprStatus { get; set; }
+        public short? EmpAppOprStatusId { get; set; }
 
-        public short? EmpAppReqStatus { get; set; }
+        public short? EmpAppReqStatusId { get; set; }
 
         public short? Title { get; set; }
 

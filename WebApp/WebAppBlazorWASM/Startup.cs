@@ -30,6 +30,7 @@ namespace WebAppBlazorWASM
             services.AddSingleton<AppSharedService>();
             services.AddSingleton<AppConfigurationService>();
             services.AddSingleton<EmployeeManageService>();
+            services.AddSingleton<EmployeeApprovalService>();
         }
 
         public void Configure(IComponentsApplicationBuilder app)

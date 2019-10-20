@@ -30,7 +30,7 @@
                         <DataAnnotationsValidator /> <div class="row">
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
                                 <div class="form-label-group mb-2">
-                                    <label for="inputTitle">Title</label>
+                                    <label for="inputTitle">Title*</label>
                                     <InputSelect id="inputTitle" @bind-Value="@EmployeeResModel.Title" Class="form-control">
                                         <option value="">--Select Title--</option>
 
@@ -44,35 +44,35 @@
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
                                 <div class="form-label-group mb-2">
-                                    <label for="inputFirstName">First Name</label>
+                                    <label for="inputFirstName">First Name*</label>
                                     <InputText id="inputFirstName" @bind-Value="@EmployeeResModel.FirstName" Class="form-control" />
                                     <ValidationMessage For="@(() => EmployeeResModel.FirstName)" Class="lead" />
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
                                 <div class="form-label-group mb-2">
-                                    <label for="inputLastName">Last Name</label>
+                                    <label for="inputLastName">Last Name*</label>
                                     <InputText id="inputLastName" @bind-Value="@EmployeeResModel.LastName" Class="form-control" />
                                     <ValidationMessage For="@(() => EmployeeResModel.LastName)" Class="lead" />
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
                                 <div class="form-label-group mb-2">
-                                    <label for="inputPersonalEmail">Personal Email</label>
+                                    <label for="inputPersonalEmail">Personal Email*</label>
                                     <InputText id="inputPersonalEmail" @bind-Value="@EmployeeResModel.PersonalEmail" Class="form-control" />
                                     <ValidationMessage For="@(() => EmployeeResModel.PersonalEmail)" Class="lead" />
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
                                 <div class="form-label-group mb-2">
-                                    <label for="inputDOB">Date Of Birth</label>
+                                    <label for="inputDOB">Date Of Birth*</label>
                                     <InputDate id="inputDOB" @bind-Value="@EmployeeResModel.DOB" Class="form-control" />
                                     <ValidationMessage For="@(() => EmployeeResModel.DOB)" Class="lead" />
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
                                 <div class="form-label-group mb-2">
-                                    <label for="inputDOJ">Date Of Joining</label>
+                                    <label for="inputDOJ">Date Of Joining*</label>
                                     <InputDate id="inputDOJ" @bind-Value="@EmployeeResModel.DOJ" Class="form-control" />
                                     <ValidationMessage For="@(() => EmployeeResModel.DOJ)" Class="lead" />
                                 </div>
@@ -89,6 +89,7 @@
                     </CardBody>
                     <CardFooter>
                         <div class="form-label-group text-center">
+                         
                             <button class="btn btn-primary  mr-2" type="submit">
                                 <Icon Class="pr-1" Name="@("fas fa-user-plus")" />    Create
                             </button>

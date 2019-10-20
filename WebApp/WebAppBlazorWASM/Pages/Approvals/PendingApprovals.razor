@@ -1,0 +1,88 @@
+﻿@page "/PendingApprovals"
+
+@inherits PendingApprovalsBase
+
+@inject IJSRuntime _jsRuntime
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await _jsRuntime.InvokeVoidAsync("homeController.setActiveNavBar", "navItemApprovals");
+        await OnPendingApprovalsLoad();
+        await _jsRuntime.InvokeVoidAsync("homeController.hideLoadingIndicator", "");
+    }
+}
+
+<NavMenu></NavMenu>
+
+<div class='container-fluid pt-1'>
+    <div class="row">
+        <div class="col-12">
+            <Card Class="">
+                <CardHeader Class="pt-1 pb-1 pl-2 pr-2 text-center">
+                    <h4 class="font-weight-normal mb-0">Employee's Pending Approvals</h4>
+                </CardHeader>
+
+                <CardBody Class="pt-0 pb-0 pl-0 pr-0">
+                    @if (PendingApprovals == null)
+                    {
+                        <p><em>Loading...</em></p>
+                    }
+                    else if (!PendingApprovals.Any())
+                    {
+                        <p><em>No pending approvals available. Please come again later.</em></p>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-sm table-hover table-bordered pb-0">
+                                <thead class="bg-info" style="color:white">
+                                    <tr>
+                                        <th scope="col">Employee Id</th>
+                                        <th scope="col">Request</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Title</th>
+                                        <th scope="col">First Name</th>
+                                        <th scope="col">Last Name</th>
+                                        <th scope="col">Personal Email</th>
+                                        <th scope="col">DOB</th>
+                                        <th scope="col">DOJ</th>
+                                        <th scope="col">IsActive</th>
+                                        <th scope="col">CreatedOn</th>
+                                        <th scope="col">CreatedBy</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="font-size: 14px;">
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td></td>
+                                    </tr>
+                                    @foreach (var pendingApproval in PendingApprovals)
+                                    {
+                                        <tr>
+                                            <td>@pendingApproval.EmployeeId</td>
+                                            <td></td>
+                                            <td></td>
+
+                                            <td>@pendingApproval.Title</td>
+                                            <td>@pendingApproval.FirstName</td>
+                                            <td>@pendingApproval.LastName</td>
+                                            <td>@pendingApproval.PersonalEmail</td>
+                                            <td>@pendingApproval.DOB</td>
+                                            <td>@pendingApproval.DOJ</td>
+                                            <td>@pendingApproval.IsActive</td>
+                                            <td>@pendingApproval.CreatedOn</td>
+                                            <td>@pendingApproval.CreatedBy</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </CardBody>
+            </Card>
+        </div>
+    </div>
+</div>
