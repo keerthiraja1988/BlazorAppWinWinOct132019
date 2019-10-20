@@ -1,4 +1,5 @@
 ﻿using DomainModel;
+using DomainModel.EmployeeApproval;
 using DomainModel.EmployeeManage;
 using DomainModel.EmployeeManage.Dimension;
 using Insight.Database;
@@ -12,6 +13,6 @@ namespace WebApiEmployeeManage.Repository
     public interface IEmployeeApprovalRepository
     {
         [Sql("P_GetAllEmployeesPendingApprovals")]
-        Task<List<Employee>> GetAllEmployeesPendingApprovalsAsync();
+        Task<List<EmployeePendingApproval>> GetAllEmployeesPendingApprovalsAsync();
     }
 }

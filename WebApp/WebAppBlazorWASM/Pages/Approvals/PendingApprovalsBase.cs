@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using ResourceModel.Authentication;
+using ResourceModel.EmployeeApproval;
 using ResourceModel.EmployeeManage;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace WebAppBlazorWASM.Pages.Approvals
 
         public JwtToken jwtToken { get; set; } = new JwtToken();
 
-        public List<EmployeeResModel> PendingApprovals { get; set; } = new List<EmployeeResModel>();
+        public List<EmployeePendingApprovalRM> PendingApprovals { get; set; } = new List<EmployeePendingApprovalRM>();
 
         public async Task OnPendingApprovalsLoad()
         {

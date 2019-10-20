@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DomainModel;
+using DomainModel.EmployeeApproval;
 using DomainModel.EmployeeManage;
 using DomainModel.EmployeeManage.Dimension;
 using ElmahCore;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using ResourceModel.Api;
 using ResourceModel.Authentication;
+using ResourceModel.EmployeeApproval;
 using ResourceModel.EmployeeManage;
 using System;
 using System.Collections.Generic;
@@ -38,13 +40,13 @@ namespace WebApiEmployeeManage.Controllers
 
         [Authorize]
         [HttpGet("GetAllEmployeesPendingApprovalsAsync")]
-        public async Task<List<EmployeeResModel>> GetAllEmployeesPendingApprovalsAsync()
+        public async Task<List<EmployeePendingApprovalRM>> GetAllEmployeesPendingApprovalsAsync()
         {
-            List<EmployeeResModel> pendingApprovalsRM = new List<EmployeeResModel>();
-            List<Employee> pendingApprovals = new List<Employee>();
+            List<EmployeePendingApprovalRM> pendingApprovalsRM = new List<EmployeePendingApprovalRM>();
+            List<EmployeePendingApproval> pendingApprovals = new List<EmployeePendingApproval>();
 
             pendingApprovals = await this._employeeApprovalRepository.GetAllEmployeesPendingApprovalsAsync();
-            pendingApprovalsRM = this._mapper.Map<List<EmployeeResModel>>(pendingApprovals);
+            pendingApprovalsRM = this._mapper.Map<List<EmployeePendingApprovalRM>>(pendingApprovals);
             return pendingApprovalsRM;
         }
     }

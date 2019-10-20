@@ -5,6 +5,7 @@ using Microsoft.JSInterop;
 using Newtonsoft.Json;
 using ResourceModel.Api;
 using ResourceModel.Authentication;
+using ResourceModel.EmployeeApproval;
 using ResourceModel.EmployeeManage;
 using System;
 using System.Collections.Generic;
@@ -40,12 +41,12 @@ namespace WebAppBlazorWASM.Services
             _jsRuntime = jsRuntime;
         }
 
-        public async Task<List<EmployeeResModel>> GetAllEmployeesPendingApprovalsAsync()
+        public async Task<List<EmployeePendingApprovalRM>> GetAllEmployeesPendingApprovalsAsync()
         {
-            List<EmployeeResModel> pendingApprovalsRM = new List<EmployeeResModel>();
+            List<EmployeePendingApprovalRM> pendingApprovalsRM = new List<EmployeePendingApprovalRM>();
 
             string url = await _appConfigurationService.GetApiUrl("EmployeeManageApi");
-            pendingApprovalsRM = await _httpClient.GetJsonAsync<List<EmployeeResModel>>(url + "/api/EmployeeApproval/GetAllEmployeesPendingApprovalsAsync");
+            pendingApprovalsRM = await _httpClient.GetJsonAsync<List<EmployeePendingApprovalRM>>(url + "/api/EmployeeApproval/GetAllEmployeesPendingApprovalsAsync");
 
             return pendingApprovalsRM;
         }

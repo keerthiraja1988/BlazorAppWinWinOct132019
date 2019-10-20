@@ -1,13 +1,15 @@
-﻿using AutoMapper;
-using DomainModel;
-using DomainModel.EmployeeManage;
-using DomainModel.EmployeeManage.Dimension;
-using ResourceModel.Authentication;
-using ResourceModel.EmployeeManage;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using DomainModel;
+using DomainModel.EmployeeApproval;
+using DomainModel.EmployeeManage;
+using DomainModel.EmployeeManage.Dimension;
+using ResourceModel.Authentication;
+using ResourceModel.EmployeeApproval;
+using ResourceModel.EmployeeManage;
 
 namespace WebApiEmployeeManage.Infrastructure
 {
@@ -23,6 +25,10 @@ namespace WebApiEmployeeManage.Infrastructure
             CreateMap<EmpAppOprStatusResModel, EmpAppOprStatus>().ReverseMap();
             CreateMap<EmpAppReqStatusResModel, EmpAppReqStatus>().ReverseMap();
             CreateMap<EmployeeTitleResModel, EmployeeTitle>().ReverseMap();
+
+            //employee's Pending Approvals
+
+            CreateMap<EmployeePendingApprovalRM, EmployeePendingApproval>().ReverseMap();
         }
     }
 }
