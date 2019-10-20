@@ -8,20 +8,20 @@ namespace ResourceModel.EmployeeManage
     {
         public short EmpAppOprStatusId { get; set; }
 
-        public short EmpAppOprStatusDesc { get; set; }
+        public string EmpAppOprStatusDesc { get; set; }
     }
 
     public class EmpAppReqStatusResModel
     {
         public short EmpAppReqStatusId { get; set; }
 
-        public short EmpAppReqStatusDesc { get; set; }
+        public string EmpAppReqStatusDesc { get; set; }
     }
 
     public class EmployeeTitleResModel
     {
         public short EmployeeTitleId { get; set; }
 
-        public short EmployeeTitleDesc { get; set; }
+        public string EmployeeTitleDesc { get; set; }
     }
 }

@@ -97,7 +97,7 @@ namespace WebApiAuthentication.Controllers
         {
             List<ApiUrlResModel> apiUrls = new List<ApiUrlResModel>();
 
-            apiUrls.Add(new ApiUrlResModel { Api = "ClaimsAServer", ApiUrls = new List<string> { "https://localhost:44381" } });
+            apiUrls.Add(new ApiUrlResModel { Api = "EmployeeManageApi", ApiUrls = new List<string> { "https://localhost:44391" } });
 
             return apiUrls;
         }

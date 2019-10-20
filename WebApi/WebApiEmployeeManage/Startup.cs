@@ -44,7 +44,7 @@ namespace WebApiEmployeeManage
             SqlInsightDbProvider.RegisterProvider();
             DbConnection sqlConnection = new SqlConnection("Data Source=.;Initial Catalog=BlazorAppWinWin;Integrated Security=True;Persist Security Info=true;");
             builder
-                .Register(b => sqlConnection.AsParallel<IAuthenticationRepository>())
+                .Register(b => sqlConnection.AsParallel<IEmployeeManageRepository>())
                 .InstancePerLifetimeScope();
         }
 

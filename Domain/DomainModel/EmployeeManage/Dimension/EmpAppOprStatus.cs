@@ -8,6 +8,6 @@ namespace DomainModel.EmployeeManage.Dimension
     {
         public short EmpAppOprStatusId { get; set; }
 
-        public short EmpAppOprStatusDesc { get; set; }
+        public string EmpAppOprStatusDesc { get; set; }
     }
 }

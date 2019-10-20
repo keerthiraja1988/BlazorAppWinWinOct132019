@@ -1,5 +1,7 @@
-﻿using System;
+﻿using ResourceModel.Infrastructure;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace ResourceModel.EmployeeManage
@@ -10,16 +12,31 @@ namespace ResourceModel.EmployeeManage
 
         public long EmployeeId { get; set; }
 
-        public short? Title { get; set; }
+        [Required]
+        public string Title { get; set; }
 
+        [Required]
+        [MinLength(4)]
+        [MaxLength(15)]
         public string FirstName { get; set; }
 
+        [Required]
+        [MinLength(4)]
+        [MaxLength(15)]
         public string LastName { get; set; }
 
+        [Required]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string PersonalEmail { get; set; }
 
+        [Required]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? DOB { get; set; }
 
+        [Required]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? DOJ { get; set; }
 
         public bool? IsActive { get; set; }

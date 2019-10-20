@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using WebAppBlazorWASM.Infrastructure.Security;
 using WebAppBlazorWASM.Infrastructure.Services;
+using WebAppBlazorWASM.Services;
 
 namespace WebAppBlazorWASM
 {
@@ -28,6 +29,7 @@ namespace WebAppBlazorWASM
 
             services.AddSingleton<AppSharedService>();
             services.AddSingleton<AppConfigurationService>();
+            services.AddSingleton<EmployeeManageService>();
         }
 
         public void Configure(IComponentsApplicationBuilder app)
