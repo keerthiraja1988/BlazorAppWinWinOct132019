@@ -47,33 +47,29 @@
                                         <th scope="col">Personal Email</th>
                                         <th scope="col">DOB</th>
                                         <th scope="col">DOJ</th>
-                                        <th scope="col">IsActive</th>
-                                        <th scope="col">CreatedOn</th>
-                                        <th scope="col">CreatedBy</th>
+                                        <th scope="col">Is Active</th>
+                                        <th scope="col">Created On</th>
+                                        <th scope="col">Created By</th>
                                     </tr>
                                 </thead>
                                 <tbody style="font-size: 14px;">
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td></td>
-                                    </tr>
                                     @foreach (var pendingApproval in PendingApprovals)
                                     {
                                         <tr>
-                                            <td>@pendingApproval.EmployeeId</td>
+                                            <td>
+                                                <a href="ProcessCreateEmployee/@pendingApproval.EmployeeRequestId"> @pendingApproval.EmployeeId</a>
+                                            </td>
                                             <td>@pendingApproval.EmpAppOprStatusDesc</td>
                                             <td>@pendingApproval.EmpAppReqStatusDesc</td>
                                             <td>@pendingApproval.EmployeeTitleDesc</td>
                                             <td>@pendingApproval.FirstName</td>
                                             <td>@pendingApproval.LastName</td>
                                             <td>@pendingApproval.PersonalEmail</td>
-                                            <td>@pendingApproval.DOB</td>
-                                            <td>@pendingApproval.DOJ</td>
+                                            <td>@pendingApproval.DOB.Value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</td>
+                                            <td>@pendingApproval.DOJ.Value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</td>
                                             <td>@pendingApproval.IsActive</td>
                                             <td>@pendingApproval.CreatedOn</td>
-                                            <td>@pendingApproval.CreatedBy</td>
+                                            <td>@pendingApproval.CreatedByName</td>
                                         </tr>
                                     }
                                 </tbody>
