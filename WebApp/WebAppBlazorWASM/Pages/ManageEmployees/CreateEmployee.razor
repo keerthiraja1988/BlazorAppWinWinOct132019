@@ -77,6 +77,14 @@
                                     <ValidationMessage For="@(() => EmployeeResModel.DOJ)" Class="lead" />
                                 </div>
                             </div>
+
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                <div class="form-label-group mb-2">
+                                    <label for="inputComments">Comments</label>
+                                    <InputTextArea id="inputComments" @bind-Value="@EmployeeResModel.Comments" Style="height:100px;" Class="form-control" />
+                                    <ValidationMessage For="@(() => EmployeeResModel.Comments)" Class="lead" />
+                                </div>
+                            </div>
                         </div>
                     </CardBody>
                     <CardFooter>

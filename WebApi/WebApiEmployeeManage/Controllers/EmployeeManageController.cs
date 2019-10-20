@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DomainModel;
+using DomainModel.EmployeeManage;
 using DomainModel.EmployeeManage.Dimension;
 using ElmahCore;
 using Microsoft.AspNetCore.Authorization;
@@ -45,6 +46,17 @@ namespace WebApiEmployeeManage.Controllers
             employeeTitlesResModel = this._mapper.Map<List<EmployeeTitleResModel>>(employeeTitles);
 
             return employeeTitlesResModel;
+        }
+
+        [Authorize]
+        [HttpPost("CreateEmployeeAsync")]
+        public async Task<EmployeeResModel> CreateEmployeeAsync(EmployeeResModel createEmployeeRM)
+        {
+            Employee createEmployee = new Employee();
+            createEmployee = this._mapper.Map<Employee>(createEmployeeRM);
+            createEmployee = await this._employeeManageRepository.CreateEmployeeAsync(createEmployee, createEmployeeRM.Comments);
+            createEmployeeRM = this._mapper.Map<EmployeeResModel>(createEmployee);
+            return createEmployeeRM;
         }
     }
 }

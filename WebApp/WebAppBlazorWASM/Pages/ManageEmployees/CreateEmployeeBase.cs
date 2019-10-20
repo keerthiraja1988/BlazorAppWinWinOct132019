@@ -40,7 +40,20 @@ namespace WebAppBlazorWASM.Pages.ManageEmployees
 
         public async Task OnCreateEmployeeButtonClick()
         {
-            Console.WriteLine(EmployeeResModel.Title);
+            await _jsRuntime.InvokeVoidAsync("homeController.showLoadingIndicator", "");
+            EmployeeResModel.CreatedBy = jwtToken.UserId;
+            EmployeeResModel createEmployeeRM = new EmployeeResModel();
+
+            createEmployeeRM = await _employeeManageService.CreateEmployeeAsync(EmployeeResModel);
+
+            if (createEmployeeRM.EmployeeId > 0)
+            {
+                await OnCleareCreateEmployeeButtonClick();
+                await _jsRuntime.InvokeVoidAsync("homeController.showSuccessToastNotification",
+                    "Employee (" + createEmployeeRM.EmployeeId + ") successfully created");
+            }
+
+            await _jsRuntime.InvokeVoidAsync("homeController.hideLoadingIndicator", "");
         }
 
         public async Task OnCleareCreateEmployeeButtonClick()

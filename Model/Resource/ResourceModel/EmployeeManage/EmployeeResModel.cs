@@ -39,6 +39,8 @@ namespace ResourceModel.EmployeeManage
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? DOJ { get; set; }
 
+        public string Comments { get; set; }
+
         public bool? IsActive { get; set; }
 
         public DateTime? CreatedOn { get; set; }

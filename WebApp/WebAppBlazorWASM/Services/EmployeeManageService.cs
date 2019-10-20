@@ -48,5 +48,21 @@ namespace WebAppBlazorWASM.Services
 
             return employeeTitlesResModel;
         }
+
+        public async Task<EmployeeResModel> CreateEmployeeAsync(EmployeeResModel createEmployeeRM)
+        {
+            string url = await _appConfigurationService.GetApiUrl("EmployeeManageApi");
+
+            string stringData = JsonConvert.SerializeObject(createEmployeeRM);
+            var contentData = new StringContent(stringData, System.Text.Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = await _httpClient.PostAsync
+                          (url + "/api/EmployeeManage/CreateEmployeeAsync", contentData);
+            string stringJWT = response.Content.
+                                   ReadAsStringAsync().Result;
+            createEmployeeRM = JsonConvert.DeserializeObject<EmployeeResModel>(stringJWT);
+
+            return createEmployeeRM;
+        }
     }
 }
