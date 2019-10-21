@@ -40,12 +40,16 @@
 
         public long? CreatedBy { get; set; }
 
-        public string CreatedByName { get; set; }
+        public string CreatedByUserName { get; set; }
+
+        public string CreatedByFullName { get; set; }
 
         public DateTime? ModifidOn { get; set; }
 
         public long? ModifiedBy { get; set; }
 
-        public string ModifiedByName { get; set; }
+        public string ModifiedByUserName { get; set; }
+
+        public string ModifiedByFullName { get; set; }
     }
 }

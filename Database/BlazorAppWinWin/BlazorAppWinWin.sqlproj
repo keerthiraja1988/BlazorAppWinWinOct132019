@@ -79,5 +79,7 @@
     <Build Include="dbo\Stored Procedures\P_CreateEmployee.sql" />
     <Build Include="dbo\Stored Procedures\P_GetAllEmployeesPendingApprovals.sql" />
     <Build Include="dbo\Stored Procedures\P_ProcessCreateEmployee.sql" />
+    <Build Include="dbo\Stored Procedures\P_GetEmployeeReqStatusHistory.sql" />
+    <Build Include="dbo\Stored Procedures\P_GetCreateEmployeeReq.sql" />
   </ItemGroup>
 </Project>

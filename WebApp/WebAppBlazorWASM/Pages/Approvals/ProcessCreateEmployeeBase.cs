@@ -18,9 +18,13 @@
     {
         public long EmployeeRequestId { get; set; } = 0;
 
+        public long EmployeeId { get; set; } = 0;
+
         public EmployeePendingApprovalRM PendingApproval { get; set; } = new EmployeePendingApprovalRM();
 
         public List<EmpAppReqStatusResModel> EmpAppReqStatusesRM { get; set; } = new List<EmpAppReqStatusResModel>();
+
+        public List<EmployeesReqStatusHistResModel> EmployeesReqStatusHistoriesRM { get; set; } = new List<EmployeesReqStatusHistResModel>();
 
         public string EmpAppReqStatusId { get; set; }
 
@@ -46,17 +50,18 @@
         public async Task OnPendingApprovalsLoad()
         {
             this.JwtToken = await this._appSharedService.GetLoggedInUserDetails();
-            var task1 = this._employeeApprovalService.GetAllEmployeesPendingApprovalsAsync();
-            var task2 = this._employeeApprovalService.GetAllEmpAppReqStatusAsync();
 
-            await Task.WhenAll(task1, task2);
+            var employeeDetails = await this._employeeApprovalService.GetCreateEmployeeReqAsync(EmployeeId, EmployeeRequestId);
 
-            var pendingApprovals = await task1;
-            this.EmpAppReqStatusesRM = await task2;
-            this.PendingApproval = pendingApprovals.Where(x => x.EmployeeRequestId == this.EmployeeRequestId).FirstOrDefault();
+            this.EmpAppReqStatusesRM = employeeDetails.ReqStatuses;
+            this.PendingApproval = employeeDetails.CreateEmployeeDetails;
+            this.EmployeesReqStatusHistoriesRM = employeeDetails.EmployeesReqStatusHistories;
+
             this.ProcessCreateEmployeeRM.EmployeeId = this.PendingApproval.EmployeeId.ToString();
             this.ProcessCreateEmployeeRM.EmployeeRequestId = this.PendingApproval.EmployeeRequestId.ToString();
             this.ProcessCreateEmployeeRM.CreatedBy = this.JwtToken.UserId;
+
+            Console.WriteLine("asfdsad " + PendingApproval.EmployeeId.ToString());
         }
 
         public async Task OnProcessCreateEmployeeBtnClick()

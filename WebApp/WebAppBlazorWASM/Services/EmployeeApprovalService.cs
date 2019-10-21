@@ -61,6 +61,24 @@
             return empAppReqStatusesEM;
         }
 
+        public async Task<(EmployeePendingApprovalRM CreateEmployeeDetails
+                        , List<EmpAppReqStatusResModel> ReqStatuses
+                        , List<EmployeesReqStatusHistResModel> EmployeesReqStatusHistories)> GetCreateEmployeeReqAsync(long employeeId, long employeeRequestId)
+        {
+            string url = await this._appConfigurationService.GetApiUrl("EmployeeManageApi");
+
+            string stringJWT = await this._httpClient.GetJsonAsync<string>(url + "/api/EmployeeApproval/GetCreateEmployeeReqAsync?employeeId="
+                                    + employeeId
+                                    + "&employeeRequestId=" + employeeRequestId
+                                );
+
+            var responses = JsonConvert.DeserializeObject<(EmployeePendingApprovalRM
+                               , List<EmpAppReqStatusResModel>
+                               , List<EmployeesReqStatusHistResModel>)>(stringJWT);
+
+            return (responses.Item1, responses.Item2, responses.Item3);
+        }
+
         public async Task<bool> ProcessCreateEmployeeAsync(ProcessCreateEmployeeRM processCreateEmployeeRM)
         {
             bool isProcessSuccess;

@@ -18,7 +18,13 @@
         [Sql(@"SELECT  * FROM EmpAppReqStatus")]
         Task<List<EmpAppReqStatus>> GetAllEmpAppReqStatusAsync();
 
+        [Sql("[dbo].[P_GetCreateEmployeeReq]")]
+        Task<EmployeePendingApproval> GetCreateEmployeeReqAsync(long employeeRequestId);
+
         [Sql("P_ProcessCreateEmployee")]
         Task<bool> ProcessCreateEmployeeAsync(EmployeePendingApproval processCreateEmployee);
+
+        [Sql("P_GetEmployeeReqStatusHistory")]
+        Task<List<EmployeesReqStatusHistory>> GetEmployeeReqStatusHistory(long employeeId, long employeeRequestId);
     }
 }
