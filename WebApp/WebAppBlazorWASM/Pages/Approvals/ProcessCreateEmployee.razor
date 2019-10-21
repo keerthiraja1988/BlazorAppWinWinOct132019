@@ -91,6 +91,8 @@
                     <EditForm Model="@ProcessCreateEmployeeRM" OnValidSubmit="@OnProcessCreateEmployeeBtnClick">
                         <DataAnnotationsValidator />
                         <div class="row text-center d-flex justify-content-end pr-1">
+                            <InputText id="inputEmployeeIdHiden" @bind-Value="@ProcessCreateEmployeeRM.EmployeeId" Class="form-control" Style="visibility:hidden" />
+
                             <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-3">
                                 <div class="form-label-group mb-2 text-left">
                                     <label for="inputProcess">Comments*</label>

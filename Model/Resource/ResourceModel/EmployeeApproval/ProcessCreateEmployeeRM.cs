@@ -7,6 +7,10 @@
 
     public class ProcessCreateEmployeeRM
     {
+        public string EmployeeId { get; set; }
+
+        public string EmployeeRequestId { get; set; }
+
         [Required]
         public string EmpAppReqStatusId { get; set; }
 
@@ -14,5 +18,7 @@
         [MinLength(4)]
         [MaxLength(500)]
         public string Comments { get; set; }
+
+        public long? CreatedBy { get; set; }
     }
 }

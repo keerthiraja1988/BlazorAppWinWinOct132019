@@ -31,6 +31,8 @@
             if (jwtToken == null || !jwtToken.IsUserAuthenticated)
             {
                 await this._jsRuntime.InvokeVoidAsync("homeController.hideLoadingIndicator", "");
+                await this._jsRuntime.InvokeVoidAsync("homeController.messageShowModal"
+                                , "Login Failed", "Username or Password is Incorrect. Please try again.");
             }
             else
             {

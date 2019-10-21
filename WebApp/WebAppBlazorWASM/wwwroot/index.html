@@ -77,24 +77,33 @@
         </div>
     </div>
 
+    <div class="modal fade" id="messageShowModal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="messageShowModalHeader"></h5>
+                </div>
+                <div class="modal-body">
+                    <span id="messageShowModalMessage"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        <i class="fas fa-times"></i>
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-
-    <div class="modal-body">
-        <div class="modal fade" id="messageShowModal" data-backdrop="static" data-keyboard="false" style="z-index: 999999;">
-            <div class="modal-dialog" role="document" style="z-index: 999999;">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Mesage</h5>
-                    </div>
-                    <div class="modal-body">
-                        <span id="messageShowModalMessage"></span>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                            <i class="fas fa-times"></i>
-                            Close
-                        </button>
-                    </div>
+    <div class="modal fade" id="messageShowModalNoBtnAutoHide" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="messageShowModalNoBtnAutoHideHeader"></h5>
+                </div>
+                <div class="modal-body">
+                    <span id="messageShowModalNoBtnAutoHideMessage"></span>
                 </div>
             </div>
         </div>

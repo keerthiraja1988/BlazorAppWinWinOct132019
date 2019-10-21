@@ -10,6 +10,9 @@
     [CreatedOn]     DATETIME      NULL,
     [CreatedBy]     BIGINT        NULL,
     [ModifidOn]     DATETIME      NULL,
-    [ModifiedBy]    BIGINT        NULL
+    [ModifiedBy]    BIGINT        NULL,
+    CONSTRAINT [PK_dbo.EmployeeId] PRIMARY KEY CLUSTERED ([EmployeeId] DESC)
 );
+
+
 

@@ -17,16 +17,36 @@
             alert(message);
         }
 
-        publicMethod.messageShowModal = function (message) {
-            $('#messageShowModal').modal('show');
+        publicMethod.messageShowModal = function (header, message) {
+            if (header == "") {
+                header = "Message";
+            }
+
+            $('#messageShowModalHeader').text(header);
             $('#messageShowModalMessage').text(message);
+            $('#messageShowModal').modal('show');
+        }
+
+        publicMethod.messageShowModalNoBtnAutoHide = function (header, message) {
+            if (header == "") {
+                header = "Message";
+            }
+
+            $('#messageShowModalNoBtnAutoHideHeader').text(header);
+            $('#messageShowModalNoBtnAutoHideMessage').text(message);
+            $('#messageShowModalNoBtnAutoHide').modal('show');
+
+            setTimeout(
+                function () {
+                    $('#messageShowModalNoBtnAutoHide').modal('hide');
+                }, 3500);
         }
 
         publicMethod.reloadPage = function () {
             location.reload();
         }
 
-        publicMethod.redirectToPage  = function (url) {
+        publicMethod.redirectToPage = function (url) {
             window.location.href = "/" + url;
         }
 

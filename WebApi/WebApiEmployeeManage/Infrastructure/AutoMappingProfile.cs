@@ -29,6 +29,7 @@
             //employee's Pending Approvals
 
             CreateMap<EmployeePendingApprovalRM, EmployeePendingApproval>().ReverseMap();
+            CreateMap<ProcessCreateEmployeeRM, EmployeePendingApproval>().ReverseMap();
         }
     }
 }

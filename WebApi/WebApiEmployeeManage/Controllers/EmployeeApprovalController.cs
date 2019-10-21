@@ -60,5 +60,15 @@
             empAppReqStatusesEM = this._mapper.Map<List<EmpAppReqStatusResModel>>(empAppReqStatues);
             return empAppReqStatusesEM;
         }
+
+        [Authorize]
+        [HttpPost("ProcessCreateEmployeeAsync")]
+        public async Task<bool> ProcessCreateEmployeeAsync(ProcessCreateEmployeeRM processCreateEmployeeRM)
+        {
+            EmployeePendingApproval processCreateEmployee = new EmployeePendingApproval();
+            processCreateEmployee = this._mapper.Map<EmployeePendingApproval>(processCreateEmployeeRM);
+
+            return await this._employeeApprovalRepository.ProcessCreateEmployeeAsync(processCreateEmployee);
+        }
     }
 }

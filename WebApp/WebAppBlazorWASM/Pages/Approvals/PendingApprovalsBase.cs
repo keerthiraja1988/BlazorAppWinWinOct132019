@@ -15,7 +15,7 @@
 
     public class PendingApprovalsBase : ComponentBase
     {
-        public List<EmployeePendingApprovalRM> PendingApprovals { get; set; } = new List<EmployeePendingApprovalRM>();
+        public List<EmployeePendingApprovalRM> PendingApprovals { get; set; } = null;
 
         public JwtToken JwtToken { get; set; } = new JwtToken();
 
@@ -35,6 +35,10 @@
         {
             this.JwtToken = await this._appSharedService.GetLoggedInUserDetails();
             this.PendingApprovals = await this._employeeApprovalService.GetAllEmployeesPendingApprovalsAsync();
+            if (this.PendingApprovals == null)
+            {
+                this.PendingApprovals = new List<EmployeePendingApprovalRM>();
+            }
         }
     }
 }

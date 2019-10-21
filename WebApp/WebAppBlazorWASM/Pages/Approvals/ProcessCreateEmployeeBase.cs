@@ -12,6 +12,7 @@
     using ResourceModel.EmployeeApproval;
     using WebAppBlazorWASM.Services;
     using ResourceModel.EmployeeManage;
+    using System.Threading;
 
     public class ProcessCreateEmployeeBase : ComponentBase
     {
@@ -26,6 +27,9 @@
         public ProcessCreateEmployeeRM ProcessCreateEmployeeRM { get; set; } = new ProcessCreateEmployeeRM();
 
         public JwtToken JwtToken { get; set; } = new JwtToken();
+
+        [Inject]
+        protected NavigationManager _navigationManager { get; set; }
 
         [Inject]
         protected ILocalStorageService _localStorage { get; set; }
@@ -50,11 +54,26 @@
             var pendingApprovals = await task1;
             this.EmpAppReqStatusesRM = await task2;
             this.PendingApproval = pendingApprovals.Where(x => x.EmployeeRequestId == this.EmployeeRequestId).FirstOrDefault();
+            this.ProcessCreateEmployeeRM.EmployeeId = this.PendingApproval.EmployeeId.ToString();
+            this.ProcessCreateEmployeeRM.EmployeeRequestId = this.PendingApproval.EmployeeRequestId.ToString();
+            this.ProcessCreateEmployeeRM.CreatedBy = this.JwtToken.UserId;
         }
 
         public async Task OnProcessCreateEmployeeBtnClick()
         {
-            Console.WriteLine(ProcessCreateEmployeeRM.Comments);
+            await this._jsRuntime.InvokeVoidAsync("homeController.showLoadingIndicator", "");
+
+            var isProcessSuccess = await this._employeeApprovalService.ProcessCreateEmployeeAsync(this.ProcessCreateEmployeeRM);
+
+            if (isProcessSuccess)
+            {
+                await this._jsRuntime.InvokeVoidAsync("homeController.messageShowModalNoBtnAutoHide"
+                                , "Congrats", "Request has been processed sucessfully. Re-directing to Pending Approval screen.");
+
+                this._navigationManager.NavigateTo("PendingApprovals");
+            }
+
+            await this._jsRuntime.InvokeVoidAsync("homeController.hideLoadingIndicator", "");
         }
     }
 }

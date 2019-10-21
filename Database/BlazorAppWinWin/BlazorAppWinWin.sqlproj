@@ -64,8 +64,6 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Products.sql" />
-    <Build Include="dbo\Tables\ClaimItem.sql" />
-    <Build Include="dbo\Tables\Claim.sql" />
     <Build Include="dbo\Tables\UserDetail.sql" />
     <Build Include="dbo\Tables\Employees.sql" />
     <Build Include="dbo\Tables\EmpAppOprStatus.sql" />
@@ -75,11 +73,11 @@
     <Build Include="dbo\Tables\ELMAH_Error.sql" />
     <Build Include="dbo\Tables\EmployeeRequests.sql" />
     <Build Include="dbo\Stored Procedures\P_RegisterUser.sql" />
-    <Build Include="dbo\Stored Procedures\P_CreateClaimA.sql" />
     <Build Include="dbo\Stored Procedures\ELMAH_GetErrorXml.sql" />
     <Build Include="dbo\Stored Procedures\ELMAH_GetErrorsXml.sql" />
     <Build Include="dbo\Stored Procedures\ELMAH_LogError.sql" />
     <Build Include="dbo\Stored Procedures\P_CreateEmployee.sql" />
     <Build Include="dbo\Stored Procedures\P_GetAllEmployeesPendingApprovals.sql" />
+    <Build Include="dbo\Stored Procedures\P_ProcessCreateEmployee.sql" />
   </ItemGroup>
 </Project>

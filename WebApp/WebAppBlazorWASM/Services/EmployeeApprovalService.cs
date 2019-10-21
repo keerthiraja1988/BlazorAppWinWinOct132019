@@ -60,5 +60,22 @@
 
             return empAppReqStatusesEM;
         }
+
+        public async Task<bool> ProcessCreateEmployeeAsync(ProcessCreateEmployeeRM processCreateEmployeeRM)
+        {
+            bool isProcessSuccess;
+            string url = await this._appConfigurationService.GetApiUrl("EmployeeManageApi");
+
+            string stringData = JsonConvert.SerializeObject(processCreateEmployeeRM);
+            var contentData = new StringContent(stringData, System.Text.Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = await this._httpClient.PostAsync
+                          (url + "/api/EmployeeApproval/ProcessCreateEmployeeAsync", contentData);
+            string stringJWT = response.Content.
+                                   ReadAsStringAsync().Result;
+            isProcessSuccess = JsonConvert.DeserializeObject<bool>(stringJWT);
+
+            return isProcessSuccess;
+        }
     }
 }

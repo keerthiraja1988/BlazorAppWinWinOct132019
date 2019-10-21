@@ -15,7 +15,10 @@
         [Sql("P_GetAllEmployeesPendingApprovals")]
         Task<List<EmployeePendingApproval>> GetAllEmployeesPendingApprovalsAsync();
 
-        [Sql("SELECT  * FROM EmpAppReqStatus")]
+        [Sql(@"SELECT  * FROM EmpAppReqStatus")]
         Task<List<EmpAppReqStatus>> GetAllEmpAppReqStatusAsync();
+
+        [Sql("P_ProcessCreateEmployee")]
+        Task<bool> ProcessCreateEmployeeAsync(EmployeePendingApproval processCreateEmployee);
     }
 }
