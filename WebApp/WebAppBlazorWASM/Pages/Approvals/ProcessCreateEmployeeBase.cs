@@ -67,13 +67,19 @@
 
             if (isProcessSuccess)
             {
-                await this._jsRuntime.InvokeVoidAsync("homeController.messageShowModalNoBtnAutoHide"
-                                , "Congrats", "Request has been processed sucessfully. Re-directing to Pending Approval screen.");
-
-                this._navigationManager.NavigateTo("PendingApprovals");
+                await this._jsRuntime.InvokeVoidAsync("approvalsController.ProcessCreateEmployeeSuccessModalShow"
+                                , "");
             }
 
             await this._jsRuntime.InvokeVoidAsync("homeController.hideLoadingIndicator", "");
+        }
+
+        public async Task OnProcessCreateEmployeeCloseBtnClick()
+        {
+            this._navigationManager.NavigateTo("PendingApprovals");
+
+            await this._jsRuntime.InvokeVoidAsync("approvalsController.ProcessCreateEmployeeSuccessModalHide"
+                               , "");
         }
     }
 }

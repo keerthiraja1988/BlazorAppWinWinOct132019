@@ -8,6 +8,8 @@
     protected override async Task OnInitializedAsync()
     {
         await _jsRuntime.InvokeVoidAsync("homeController.setActiveNavBar", "navItemApprovals");
+        await _jsRuntime.InvokeVoidAsync("homeController.loadApprovalsController", "");
+
         await OnPendingApprovalsLoad();
         await _jsRuntime.InvokeVoidAsync("homeController.hideLoadingIndicator", "");
     }

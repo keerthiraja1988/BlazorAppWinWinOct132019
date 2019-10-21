@@ -98,8 +98,8 @@
                 }, 500);
         }
 
-        publicMethod.loadClaimsAController = function () {
-            $.getScript("./jsControllers/claimsAController.js", function (data, textStatus, jqxhr) {
+        publicMethod.loadApprovalsController = function () {
+            $.getScript("./jsControllers/approvalsController.js", function (data, textStatus, jqxhr) {
             });
         }
     }(window.homeController = window.homeController || {}, jQuery)

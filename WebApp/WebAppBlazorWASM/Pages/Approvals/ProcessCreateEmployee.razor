@@ -10,6 +10,7 @@
     protected override async Task OnInitializedAsync()
     {
         await base._jsRuntime.InvokeVoidAsync("homeController.setActiveNavBar", "navItemApprovals");
+        await base._jsRuntime.InvokeVoidAsync("homeController.loadApprovalsController", "");
         base.EmployeeRequestId = Convert.ToInt64(EmployeeRequestIdStr);
         await base.OnPendingApprovalsLoad();
         await base._jsRuntime.InvokeVoidAsync("homeController.hideLoadingIndicator", "");
@@ -122,6 +123,28 @@
                     </EditForm>
                 </CardBody>
             </Card>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ProcessCreateEmployeeSuccessModal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="">Success</h5>
+                </div>
+                <div class="modal-body">
+                    <span id="">
+                        Request submitted sucessfully. Click Ok to re-direct to Pending Approval screen.
+                    </span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                            @onclick="@(async () => await OnProcessCreateEmployeeCloseBtnClick())">
+                        <i class="fas fa-check"></i>
+                        Ok
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
