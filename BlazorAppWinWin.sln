@@ -27,6 +27,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{2D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiEmployeeManage", "WebApi\WebApiEmployeeManage\WebApiEmployeeManage.csproj", "{A04529BF-9B71-454E-A650-77617559796C}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "BlazorAppWinWin", "Database\BlazorAppWinWin\BlazorAppWinWin.sqlproj", "{DAAEC4ED-4357-43D9-8C75-13D3CCD77EFA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Comparator", "Comparator", "{5933ED61-FBDA-496E-A52B-4A0E5AD8FF2B}"
+	ProjectSection(SolutionItems) = preProject
+		Database\Comparator\SqlSchemaCompare1.scmp = Database\Comparator\SqlSchemaCompare1.scmp
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +64,12 @@ Global
 		{A04529BF-9B71-454E-A650-77617559796C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A04529BF-9B71-454E-A650-77617559796C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A04529BF-9B71-454E-A650-77617559796C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAAEC4ED-4357-43D9-8C75-13D3CCD77EFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAAEC4ED-4357-43D9-8C75-13D3CCD77EFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAAEC4ED-4357-43D9-8C75-13D3CCD77EFA}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{DAAEC4ED-4357-43D9-8C75-13D3CCD77EFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAAEC4ED-4357-43D9-8C75-13D3CCD77EFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAAEC4ED-4357-43D9-8C75-13D3CCD77EFA}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,6 +83,8 @@ Global
 		{22748B18-5CFD-4953-A3D5-F0E6DC62D145} = {D64476FD-A1F4-4E2F-B7D1-C620A738FB33}
 		{A4389F24-7452-4746-93BB-B916B9E4FC5F} = {4D24DA8F-E192-4A7F-BEA4-E50FB228BF73}
 		{A04529BF-9B71-454E-A650-77617559796C} = {D64476FD-A1F4-4E2F-B7D1-C620A738FB33}
+		{DAAEC4ED-4357-43D9-8C75-13D3CCD77EFA} = {2D8A817D-FE11-454B-ABAA-7ADB17AB71BD}
+		{5933ED61-FBDA-496E-A52B-4A0E5AD8FF2B} = {2D8A817D-FE11-454B-ABAA-7ADB17AB71BD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E5C22593-B0DD-4B12-8A41-3B03370A7437}
