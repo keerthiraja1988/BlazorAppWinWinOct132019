@@ -21,13 +21,21 @@
 
         public int UserType { get; set; }
 
-        public DateTime CreatedOn { get; set; }
+        public DateTime? CreatedOn { get; set; }
 
-        public long CreatedBy { get; set; }
+        public long? CreatedByUserId { get; set; }
 
-        public DateTime ModifidOn { get; set; }
+        public string CreatedByUserName { get; set; }
 
-        public long ModifiedBy { get; set; }
+        public string CreatedByFullName { get; set; }
+
+        public DateTime? ModifiedOn { get; set; }
+
+        public long? ModifiedByUserId { get; set; }
+
+        public string ModifiedByUserName { get; set; }
+
+        public string ModifiedByFullName { get; set; }
 
         public JwtToken JwtToken { get; set; } = new JwtToken();
     }

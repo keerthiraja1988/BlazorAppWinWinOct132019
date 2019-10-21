@@ -41,7 +41,7 @@
         public async Task OnCreateEmployeeButtonClick()
         {
             await this._jsRuntime.InvokeVoidAsync("homeController.showLoadingIndicator", "");
-            EmployeeResModel.CreatedBy = this.JwtToken.UserId;
+            EmployeeResModel.CreatedByUserId = this.JwtToken.UserId;
             EmployeeResModel createEmployeeRM = new EmployeeResModel();
 
             createEmployeeRM = await this._employeeManageService.CreateEmployeeAsync(EmployeeResModel);
