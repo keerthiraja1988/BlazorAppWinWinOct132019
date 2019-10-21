@@ -1,16 +1,16 @@
-using Blazored.LocalStorage;
-using Blazorise;
-using Blazorise.Bootstrap;
-using Blazorise.Icons.FontAwesome;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using WebAppBlazorWASM.Infrastructure.Security;
-using WebAppBlazorWASM.Infrastructure.Services;
-using WebAppBlazorWASM.Services;
-
 namespace WebAppBlazorWASM
 {
+    using Blazored.LocalStorage;
+    using Blazorise;
+    using Blazorise.Bootstrap;
+    using Blazorise.Icons.FontAwesome;
+    using Microsoft.AspNetCore.Components.Authorization;
+    using Microsoft.AspNetCore.Components.Builder;
+    using Microsoft.Extensions.DependencyInjection;
+    using WebAppBlazorWASM.Infrastructure.Security;
+    using WebAppBlazorWASM.Infrastructure.Services;
+    using WebAppBlazorWASM.Services;
+
     public class Startup
     {
         public void ConfigureServices(IServiceCollection services)

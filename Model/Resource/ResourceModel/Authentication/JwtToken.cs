@@ -1,14 +1,13 @@
-﻿using FluentValidation;
-using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace ResourceModel.Authentication
+﻿namespace ResourceModel.Authentication
 {
+    using System;
+    using System.ComponentModel.DataAnnotations;
+
     public class JwtToken
     {
         public bool IsUserAuthenticated { get; set; }
 
-        public Int64 UserId { get; set; }
+        public long UserId { get; set; }
 
         public string UserName { get; set; }
 
@@ -16,8 +15,6 @@ namespace ResourceModel.Authentication
 
         public DateTime CreatedOn { get; set; }
 
-        public String Token { get; set; }
-
+        public string Token { get; set; }
     }
-
 }

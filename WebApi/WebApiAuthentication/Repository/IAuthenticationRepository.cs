@@ -1,12 +1,12 @@
-﻿using DomainModel;
-using Insight.Database;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace WebApiAuthentication.Repository
+﻿namespace WebApiAuthentication.Repository
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using DomainModel;
+    using Insight.Database;
+
     public interface IAuthenticationRepository
     {
         [Sql(@"SELECT *  FROM [dbo].[UserDetail]")]

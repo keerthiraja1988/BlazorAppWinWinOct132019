@@ -1,25 +1,25 @@
-﻿using AutoMapper;
-using DomainModel;
-using DomainModel.EmployeeManage;
-using DomainModel.EmployeeManage.Dimension;
-using ElmahCore;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
-using ResourceModel.Api;
-using ResourceModel.Authentication;
-using ResourceModel.EmployeeManage;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using WebApiEmployeeManage.Repository;
-
-namespace WebApiEmployeeManage.Controllers
+﻿namespace WebApiEmployeeManage.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IdentityModel.Tokens.Jwt;
+    using System.Security.Claims;
+    using System.Text;
+    using System.Threading.Tasks;
+    using AutoMapper;
+    using DomainModel;
+    using DomainModel.EmployeeManage;
+    using DomainModel.EmployeeManage.Dimension;
+    using ElmahCore;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.IdentityModel.Tokens;
+    using ResourceModel.Api;
+    using ResourceModel.Authentication;
+    using ResourceModel.EmployeeManage;
+    using WebApiEmployeeManage.Repository;
+
     [Route("api/[controller]")]
     [ApiController]
     [Produces("application/json")]
@@ -31,9 +31,9 @@ namespace WebApiEmployeeManage.Controllers
 
         public EmployeeManageController(IMapper mapper, ILogger<EmployeeManageController> logger, IEmployeeManageRepository employeeManageRepository)
         {
-            _mapper = mapper;
-            _logger = logger;
-            _employeeManageRepository = employeeManageRepository;
+            this._mapper = mapper;
+            this._logger = logger;
+            this._employeeManageRepository = employeeManageRepository;
         }
 
         [Authorize]

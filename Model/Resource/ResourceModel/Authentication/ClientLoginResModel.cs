@@ -1,9 +1,8 @@
-﻿using FluentValidation;
-using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace ResourceModel.Authentication
+﻿namespace ResourceModel.Authentication
 {
+    using System;
+    using System.ComponentModel.DataAnnotations;
+
     public class ClientLoginResModel
     {
         [MinLength(6)]

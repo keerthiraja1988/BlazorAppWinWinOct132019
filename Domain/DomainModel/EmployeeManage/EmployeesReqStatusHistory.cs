@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DomainModel.EmployeeManage
+﻿namespace DomainModel.EmployeeManage
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+
     public class EmployeesReqStatusHistory
     {
         public long EmployeesReqStatusHistoryId { get; set; }

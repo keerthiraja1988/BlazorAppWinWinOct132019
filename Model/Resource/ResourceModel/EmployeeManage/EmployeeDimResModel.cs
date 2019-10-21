@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ResourceModel.EmployeeManage
+﻿namespace ResourceModel.EmployeeManage
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+
     public class EmpAppOprStatusResModel
     {
         public short EmpAppOprStatusId { get; set; }

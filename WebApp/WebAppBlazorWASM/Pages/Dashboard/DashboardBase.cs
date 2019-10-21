@@ -1,17 +1,19 @@
-﻿using Blazored.LocalStorage;
-using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
-using ResourceModel.Authentication;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WebAppBlazorWASM.Infrastructure.Services;
-
-namespace WebAppBlazorWASM.Pages.Dashboard
+﻿namespace WebAppBlazorWASM.Pages.Dashboard
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using WebAppBlazorWASM.Infrastructure.Services;
+    using Blazored.LocalStorage;
+    using Microsoft.AspNetCore.Components;
+    using Microsoft.JSInterop;
+    using ResourceModel.Authentication;
+
     public class DashboardBase : ComponentBase
     {
+        public JwtToken JwtTokent { get; set; } = new JwtToken();
+
         [Inject]
         protected AppSharedService _appSharedService { get; set; }
 
@@ -21,14 +23,12 @@ namespace WebAppBlazorWASM.Pages.Dashboard
         [Inject]
         protected IJSRuntime _jsRuntime { get; set; }
 
-        public JwtToken jwtToken { get; set; } = new JwtToken();
-
         public async Task OnDashboardLoad()
         {
-            if (await _localStorage.GetItemAsync<string>("signedInSuccessfullyFlag") == "true")
+            if (await this._localStorage.GetItemAsync<string>("signedInSuccessfullyFlag") == "true")
             {
-                await _jsRuntime.InvokeVoidAsync("homeController.showSuccessToastNotification", "Logged in successfully");
-                await _localStorage.RemoveItemAsync("signedInSuccessfullyFlag");
+                await this._jsRuntime.InvokeVoidAsync("homeController.showSuccessToastNotification", "Logged in successfully");
+                await this._localStorage.RemoveItemAsync("signedInSuccessfullyFlag");
             }
         }
     }

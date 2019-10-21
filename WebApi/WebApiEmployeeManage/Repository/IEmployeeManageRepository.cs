@@ -1,14 +1,14 @@
-﻿using DomainModel;
-using DomainModel.EmployeeManage;
-using DomainModel.EmployeeManage.Dimension;
-using Insight.Database;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace WebApiEmployeeManage.Repository
+﻿namespace WebApiEmployeeManage.Repository
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using DomainModel;
+    using DomainModel.EmployeeManage;
+    using DomainModel.EmployeeManage.Dimension;
+    using Insight.Database;
+
     public interface IEmployeeManageRepository
     {
         [Sql(@"SELECT *  FROM [dbo].[EmployeeTitle]")]

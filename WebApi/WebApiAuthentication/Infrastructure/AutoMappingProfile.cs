@@ -1,13 +1,13 @@
-﻿using AutoMapper;
-using DomainModel;
-using ResourceModel.Authentication;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace WebApiAuthentication.Infrastructure
+﻿namespace WebApiAuthentication.Infrastructure
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using AutoMapper;
+    using DomainModel;
+    using ResourceModel.Authentication;
+
     public class AutoMappingProfile : Profile
     {
         public AutoMappingProfile()
@@ -16,7 +16,6 @@ namespace WebApiAuthentication.Infrastructure
 
             CreateMap<UserDetailResModel, UserDetailModel>().ReverseMap();
             CreateMap<RegisterUserResModel, UserDetailModel>().ReverseMap();
-
         }
     }
 }

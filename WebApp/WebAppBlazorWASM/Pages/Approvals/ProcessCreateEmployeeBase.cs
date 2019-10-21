@@ -1,19 +1,27 @@
-﻿using Blazored.LocalStorage;
-using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
-using ResourceModel.Authentication;
-using ResourceModel.EmployeeApproval;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WebAppBlazorWASM.Infrastructure.Services;
-using WebAppBlazorWASM.Services;
-
-namespace WebAppBlazorWASM.Pages.Approvals
+﻿namespace WebAppBlazorWASM.Pages.Approvals
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using WebAppBlazorWASM.Infrastructure.Services;
+    using Blazored.LocalStorage;
+    using Microsoft.AspNetCore.Components;
+    using Microsoft.JSInterop;
+    using ResourceModel.Authentication;
+    using ResourceModel.EmployeeApproval;
+    using WebAppBlazorWASM.Services;
+
     public class ProcessCreateEmployeeBase : ComponentBase
     {
+        public long EmployeeRequestId { get; set; } = 0;
+
+        public JwtToken JwtToken { get; set; } = new JwtToken();
+
+        public EmployeePendingApprovalRM PendingApproval { get; set; } = new EmployeePendingApprovalRM();
+
+        public string EmpAppReqStatusId { get; set; }
+
         [Inject]
         protected ILocalStorageService _localStorage { get; set; }
 
@@ -26,22 +34,14 @@ namespace WebAppBlazorWASM.Pages.Approvals
         [Inject]
         protected EmployeeApprovalService _employeeApprovalService { get; set; }
 
-        public Int64 EmployeeRequestId { get; set; } = 0;
-
-        public JwtToken jwtToken { get; set; } = new JwtToken();
-
-        public EmployeePendingApprovalRM PendingApproval { get; set; } = new EmployeePendingApprovalRM();
-
-        public string EmpAppReqStatusId { get; set; }
-
         public async Task OnPendingApprovalsLoad()
         {
-            jwtToken = await _appSharedService.GetLoggedInUserDetails();
-            var pendingApprovals = await _employeeApprovalService.GetAllEmployeesPendingApprovalsAsync();
-            Console.WriteLine(EmployeeRequestId);
+            this.JwtToken = await this._appSharedService.GetLoggedInUserDetails();
+            var pendingApprovals = await this._employeeApprovalService.GetAllEmployeesPendingApprovalsAsync();
+            Console.WriteLine(this.EmployeeRequestId);
 
-            PendingApproval = pendingApprovals.Where(x => x.EmployeeRequestId == EmployeeRequestId).FirstOrDefault();
-            Console.WriteLine(PendingApproval.EmployeeRequestId.ToString());
+            this.PendingApproval = pendingApprovals.Where(x => x.EmployeeRequestId == this.EmployeeRequestId).FirstOrDefault();
+            Console.WriteLine(this.PendingApproval.EmployeeRequestId.ToString());
         }
     }
 }

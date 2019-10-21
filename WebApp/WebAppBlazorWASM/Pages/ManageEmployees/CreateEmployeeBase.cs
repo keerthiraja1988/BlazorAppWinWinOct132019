@@ -1,19 +1,25 @@
-﻿using Blazored.LocalStorage;
-using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
-using ResourceModel.Authentication;
-using ResourceModel.EmployeeManage;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WebAppBlazorWASM.Infrastructure.Services;
-using WebAppBlazorWASM.Services;
-
-namespace WebAppBlazorWASM.Pages.ManageEmployees
+﻿namespace WebAppBlazorWASM.Pages.ManageEmployees
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using WebAppBlazorWASM.Infrastructure.Services;
+    using WebAppBlazorWASM.Services;
+    using Blazored.LocalStorage;
+    using Microsoft.AspNetCore.Components;
+    using Microsoft.JSInterop;
+    using ResourceModel.Authentication;
+    using ResourceModel.EmployeeManage;
+
     public class CreateEmployeeBase : ComponentBase
     {
+        public JwtToken JwtToken { get; set; } = new JwtToken();
+
+        public EmployeeResModel EmployeeResModel { get; set; } = new EmployeeResModel();
+
+        public List<EmployeeTitleResModel> EmployeeTitlesResModel { get; set; } = new List<EmployeeTitleResModel>();
+
         [Inject]
         protected ILocalStorageService _localStorage { get; set; }
 
@@ -26,34 +32,28 @@ namespace WebAppBlazorWASM.Pages.ManageEmployees
         [Inject]
         protected EmployeeManageService _employeeManageService { get; set; }
 
-        public JwtToken jwtToken { get; set; } = new JwtToken();
-
-        public EmployeeResModel EmployeeResModel { get; set; } = new EmployeeResModel();
-
-        public List<EmployeeTitleResModel> EmployeeTitlesResModel { get; set; } = new List<EmployeeTitleResModel>();
-
         public async Task OnCreateEmployeeLoad()
         {
-            EmployeeTitlesResModel = await _employeeManageService.GetAllEmployeeTitlesAsync();
-            jwtToken = await _appSharedService.GetLoggedInUserDetails();
+            this.EmployeeTitlesResModel = await this._employeeManageService.GetAllEmployeeTitlesAsync();
+            this.JwtToken = await this._appSharedService.GetLoggedInUserDetails();
         }
 
         public async Task OnCreateEmployeeButtonClick()
         {
-            await _jsRuntime.InvokeVoidAsync("homeController.showLoadingIndicator", "");
-            EmployeeResModel.CreatedBy = jwtToken.UserId;
+            await this._jsRuntime.InvokeVoidAsync("homeController.showLoadingIndicator", "");
+            EmployeeResModel.CreatedBy = this.JwtToken.UserId;
             EmployeeResModel createEmployeeRM = new EmployeeResModel();
 
-            createEmployeeRM = await _employeeManageService.CreateEmployeeAsync(EmployeeResModel);
+            createEmployeeRM = await this._employeeManageService.CreateEmployeeAsync(EmployeeResModel);
 
             if (createEmployeeRM.EmployeeId > 0)
             {
-                await OnCleareCreateEmployeeButtonClick();
-                await _jsRuntime.InvokeVoidAsync("homeController.showSuccessToastNotification",
+                await this.OnCleareCreateEmployeeButtonClick();
+                await this._jsRuntime.InvokeVoidAsync("homeController.showSuccessToastNotification",
                     "Employee (" + createEmployeeRM.EmployeeId + ") successfully created");
             }
 
-            await _jsRuntime.InvokeVoidAsync("homeController.hideLoadingIndicator", "");
+            await this._jsRuntime.InvokeVoidAsync("homeController.hideLoadingIndicator", "");
         }
 
         public async Task OnCleareCreateEmployeeButtonClick()

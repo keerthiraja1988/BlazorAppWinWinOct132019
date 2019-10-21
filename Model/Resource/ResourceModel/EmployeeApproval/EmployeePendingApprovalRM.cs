@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ResourceModel.EmployeeApproval
+﻿namespace ResourceModel.EmployeeApproval
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+
     public class EmployeePendingApprovalRM
     {
         public long EmployeeId { get; set; }

@@ -1,11 +1,10 @@
-﻿using ResourceModel.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-
-namespace ResourceModel.EmployeeManage
+﻿namespace ResourceModel.EmployeeManage
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Text;
+
     public class EmployeeResModel
     {
         public long EmployeeRequestId { get; set; }

@@ -1,22 +1,21 @@
-﻿using AutoMapper;
-using DomainModel;
-using ElmahCore;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
-using ResourceModel.Api;
-using ResourceModel.Authentication;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using WebApiAuthentication.Repository;
-
-namespace WebApiAuthentication.Controllers
+﻿namespace WebApiAuthentication.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IdentityModel.Tokens.Jwt;
+    using System.Security.Claims;
+    using System.Text;
+    using System.Threading.Tasks;
+    using AutoMapper;
+    using DomainModel;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.IdentityModel.Tokens;
+    using ResourceModel.Api;
+    using ResourceModel.Authentication;
+    using WebApiAuthentication.Repository;
+
     [Route("api/[controller]")]
     [ApiController]
     [Produces("application/json")]
@@ -28,9 +27,9 @@ namespace WebApiAuthentication.Controllers
 
         public AuthenticationController(IMapper mapper, ILogger<AuthenticationController> logger, IAuthenticationRepository authenticationRepository)
         {
-            _mapper = mapper;
-            _logger = logger;
-            _authenticationRepository = authenticationRepository;
+            this._mapper = mapper;
+            this._logger = logger;
+            this._authenticationRepository = authenticationRepository;
         }
 
         [Authorize]
@@ -58,7 +57,7 @@ namespace WebApiAuthentication.Controllers
 
             userDetailRmReturn = this._mapper.Map<UserDetailResModel>(userDetail);
 
-            jwtTokenrm = GenerateJwtToken(userDetailRmReturn);
+            jwtTokenrm = this.GenerateJwtToken(userDetailRmReturn);
 
             return userDetailRmReturn;
         }
@@ -79,7 +78,7 @@ namespace WebApiAuthentication.Controllers
 
             userDetailRmReturn = this._mapper.Map<UserDetailResModel>(userDetail);
 
-            jwtTokenrm = GenerateJwtToken(userDetailRmReturn);
+            jwtTokenrm = this.GenerateJwtToken(userDetailRmReturn);
 
             return jwtTokenrm;
         }
@@ -100,6 +99,12 @@ namespace WebApiAuthentication.Controllers
             apiUrls.Add(new ApiUrlResModel { Api = "EmployeeManageApi", ApiUrls = new List<string> { "https://localhost:44391" } });
 
             return apiUrls;
+        }
+
+        [HttpGet("Test")]
+        public async Task Test()
+        {
+            throw new Exception();
         }
 
         private JwtToken GenerateJwtToken(UserDetailResModel userDetailRmReturn)
@@ -127,12 +132,6 @@ namespace WebApiAuthentication.Controllers
             jwtTokenrm.IsUserAuthenticated = true;
 
             return jwtTokenrm;
-        }
-
-        [HttpGet("Test")]
-        public async Task Test()
-        {
-            throw new Exception();
         }
     }
 }

@@ -1,42 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Autofac;
-using AutoMapper;
-using ElmahCore;
-using ElmahCore.Mvc;
-using ElmahCore.Sql;
-using Insight.Database;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using Newtonsoft.Json.Serialization;
-using Swashbuckle.AspNetCore.Swagger;
-using WebApiEmployeeManage.Infrastructure;
-using WebApiEmployeeManage.Repository;
-
-namespace WebApiEmployeeManage
+﻿namespace WebApiEmployeeManage
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Common;
+    using System.Data.SqlClient;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Autofac;
+    using AutoMapper;
+    using ElmahCore;
+    using ElmahCore.Mvc;
+    using ElmahCore.Sql;
+    using Insight.Database;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.HttpsPolicy;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.IdentityModel.Tokens;
+    using Microsoft.OpenApi.Models;
+    using Newtonsoft.Json.Serialization;
+    using Swashbuckle.AspNetCore.Swagger;
+    using WebApiEmployeeManage.Infrastructure;
+    using WebApiEmployeeManage.Repository;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            this.Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
+
         public ILifetimeScope AutofacContainer { get; private set; }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -123,6 +124,7 @@ namespace WebApiEmployeeManage
             {
                 app.UseDeveloperExceptionPage();
             }
+
             app.UseElmah();
             app.UseCors("AllowAll");
 

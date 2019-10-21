@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using DomainModel;
-using DomainModel.EmployeeApproval;
-using DomainModel.EmployeeManage;
-using DomainModel.EmployeeManage.Dimension;
-using ResourceModel.Authentication;
-using ResourceModel.EmployeeApproval;
-using ResourceModel.EmployeeManage;
-
-namespace WebApiEmployeeManage.Infrastructure
+﻿namespace WebApiEmployeeManage.Infrastructure
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using AutoMapper;
+    using DomainModel;
+    using DomainModel.EmployeeApproval;
+    using DomainModel.EmployeeManage;
+    using DomainModel.EmployeeManage.Dimension;
+    using ResourceModel.Authentication;
+    using ResourceModel.EmployeeApproval;
+    using ResourceModel.EmployeeManage;
+
     public class AutoMappingProfile : Profile
     {
         public AutoMappingProfile()

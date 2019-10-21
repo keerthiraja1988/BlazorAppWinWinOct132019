@@ -1,14 +1,14 @@
-﻿using Blazored.LocalStorage;
-using Microsoft.AspNetCore.Components;
-using ResourceModel.Api;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-
-namespace WebAppBlazorWASM.Infrastructure.Services
+﻿namespace WebAppBlazorWASM.Infrastructure.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using Blazored.LocalStorage;
+    using Microsoft.AspNetCore.Components;
+    using ResourceModel.Api;
+
     public class AppConfigurationService
     {
         private readonly HttpClient _httpClient;
@@ -16,8 +16,8 @@ namespace WebAppBlazorWASM.Infrastructure.Services
 
         public AppConfigurationService(HttpClient httpClient, ILocalStorageService localStorage)
         {
-            _httpClient = httpClient;
-            _localStorage = localStorage;
+            this._httpClient = httpClient;
+            this._localStorage = localStorage;
         }
 
         public async Task<bool> LoadAppConfigToStorage()
@@ -25,13 +25,13 @@ namespace WebAppBlazorWASM.Infrastructure.Services
             List<AppConfigurationValue> items = new List<AppConfigurationValue>();
             List<ApiUrlResModel> apiUrls = new List<ApiUrlResModel>();
 
-            await _localStorage.RemoveItemAsync("Apis");
+            await this._localStorage.RemoveItemAsync("Apis");
 
-            items = await _httpClient.GetJsonAsync<List<AppConfigurationValue>>("sample-data/appsettings.json");
+            items = await this._httpClient.GetJsonAsync<List<AppConfigurationValue>>("sample-data/appsettings.json");
 
             apiUrls.Add(new ApiUrlResModel { Api = "WebApiAuthenticationServer", ApiUrls = new List<string>() { items.Where(x => x.Key == "WebApiAuthenticationServer").FirstOrDefault().Value } });
 
-            var urls = await _localStorage.GetItemAsync<List<ApiUrlResModel>>("Apis");
+            var urls = await this._localStorage.GetItemAsync<List<ApiUrlResModel>>("Apis");
 
             if (urls != null && urls.Count > 0)
             {
@@ -39,7 +39,7 @@ namespace WebAppBlazorWASM.Infrastructure.Services
                 apiUrls.AddRange(urls);
             }
 
-            await _localStorage.SetItemAsync("Apis", apiUrls);
+            await this._localStorage.SetItemAsync("Apis", apiUrls);
 
             return true;
         }
@@ -48,12 +48,12 @@ namespace WebAppBlazorWASM.Infrastructure.Services
         {
             string url = "";
 
-            var urls = await _localStorage.GetItemAsync<List<ApiUrlResModel>>("Apis");
+            var urls = await this._localStorage.GetItemAsync<List<ApiUrlResModel>>("Apis");
 
             if (urls == null || urls.Count == 0)
             {
-                await LoadAppConfigToStorage();
-                urls = await _localStorage.GetItemAsync<List<ApiUrlResModel>>("Apis");
+                await this.LoadAppConfigToStorage();
+                urls = await this._localStorage.GetItemAsync<List<ApiUrlResModel>>("Apis");
             }
 
             return urls.Where(x => x.Api == api).Select(x => x.ApiUrls.FirstOrDefault()).FirstOrDefault();
@@ -61,14 +61,14 @@ namespace WebAppBlazorWASM.Infrastructure.Services
 
         public async Task<bool> LoadUrlsToStorage(List<ApiUrlResModel> apiUrls)
         {
-            await _localStorage.RemoveItemAsync("Apis");
+            await this._localStorage.RemoveItemAsync("Apis");
 
             List<AppConfigurationValue> items = new List<AppConfigurationValue>();
 
-            items = await _httpClient.GetJsonAsync<List<AppConfigurationValue>>("sample-data/appsettings.json");
+            items = await this._httpClient.GetJsonAsync<List<AppConfigurationValue>>("sample-data/appsettings.json");
 
             apiUrls.Add(new ApiUrlResModel { Api = "WebApiAuthenticationServer", ApiUrls = new List<string>() { items.Where(x => x.Key == "WebApiAuthenticationServer").FirstOrDefault().Value } });
-            await _localStorage.SetItemAsync("Apis", apiUrls);
+            await this._localStorage.SetItemAsync("Apis", apiUrls);
             return true;
         }
 

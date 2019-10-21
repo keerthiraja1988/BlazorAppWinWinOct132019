@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DomainModel.EmployeeApproval
+﻿namespace DomainModel.EmployeeApproval
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+
     public class EmployeePendingApproval
     {
         public long EmployeeId { get; set; }

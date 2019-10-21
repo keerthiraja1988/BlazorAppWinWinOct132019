@@ -1,10 +1,10 @@
-﻿using System;
-
-namespace DomainModel
+﻿namespace DomainModel
 {
+    using System;
+
     public class UserDetailModel
     {
-        public Int64 UserId { get; set; }
+        public long UserId { get; set; }
 
         public string UserName { get; set; }
 
@@ -22,10 +22,10 @@ namespace DomainModel
 
         public DateTime CreatedOn { get; set; }
 
-        public Int64 CreatedBy { get; set; }
+        public long CreatedBy { get; set; }
 
         public DateTime ModifidOn { get; set; }
 
-        public Int64 ModifiedBy { get; set; }
+        public long ModifiedBy { get; set; }
     }
 }
