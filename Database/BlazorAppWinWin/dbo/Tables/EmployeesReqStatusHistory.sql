@@ -6,11 +6,13 @@
     [EmpAppReqStatusId]           SMALLINT      NULL,
     [Comments]                    VARCHAR (MAX) NULL,
     [CreatedOn]                   DATETIME      NULL,
-    [CreatedBy]                   BIGINT        NULL,
+    [CreatedByUserId]             BIGINT        NULL,
     [ModifidOn]                   DATETIME      NULL,
-    [ModifiedBy]                  BIGINT        NULL,
+    [ModifiedByUserId]            BIGINT        NULL,
     CONSTRAINT [PK_dbo.EmployeesReqStatusHistoryId] PRIMARY KEY CLUSTERED ([EmployeesReqStatusHistoryId] DESC)
 );
+
+
 
 
 

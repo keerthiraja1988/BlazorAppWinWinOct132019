@@ -1,6 +1,6 @@
 ﻿
 
-
+-- EXEC [dbo].[P_GetAllEmployeesPendingApprovals]
 CREATE PROC [dbo].[P_GetAllEmployeesPendingApprovals]
 								
 AS
@@ -19,12 +19,12 @@ AS
 			  ,EmpReqs.[DOB]
 			  ,EmpReqs.[DOJ]
 			  ,EmpReqs.[IsActive]
-			  ,EmpReqs.[CreatedOn]
-			  ,EmpReqs.[CreatedBy]
-			  ,USDCreatedBy.FirstName + ' ' + USDCreatedBy.LastName AS CreatedByName
+			    ,EmpReqs.[CreatedOn]
+			  ,EmpReqs.[CreatedByUserId]
+			  ,USDCreatedBy.FirstName + ' ' + USDCreatedBy.LastName AS CreatedByFullName
 			  ,EmpReqs.[ModifidOn]
-			  ,EmpReqs.[ModifiedBy]		
-			  ,USDModifiedBy.FirstName + ' ' + USDModifiedBy.LastName AS ModifiedByName
+			  ,EmpReqs.[ModifiedByUserId]		
+			  ,USDModifiedBy.FirstName + ' ' + USDModifiedBy.LastName AS ModifiedByFullName
 			  ,(SELECT TOP 1 EmpReqStatusHistory.Comments FROM 
 				 EmployeesReqStatusHistory EmpReqStatusHistory
 				  WHERE EmpReqStatusHistory.EmployeeRequestId = EmpReqs.EmployeeRequestId
@@ -37,9 +37,9 @@ AS
 	   INNER JOIN EmpAppReqStatus EmpReqStatus
 	   ON EmpReqStatus.EmpAppReqStatusId = EmpReqs.EmpAppReqStatusId
 	   LEFT JOIN [dbo].[UserDetail] USDCreatedBy
-	   ON USDCreatedBy.UserId = EmpReqs.CreatedBy
+	   ON USDCreatedBy.UserId = EmpReqs.CreatedByUserId
 	   LEFT JOIN [dbo].[UserDetail] USDModifiedBy
-	   ON USDModifiedBy.UserId = EmpReqs.[ModifiedBy]
+	   ON USDModifiedBy.UserId = EmpReqs.[ModifiedByUserId]
 	   WHERE EmpReqs.EmpAppReqStatusId = 100 --Submitted
 	ORDER BY EmpReqs.[EmployeeId]
       

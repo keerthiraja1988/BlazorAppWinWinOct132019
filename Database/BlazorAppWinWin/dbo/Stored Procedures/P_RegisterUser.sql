@@ -5,14 +5,14 @@
 								  @Password     [NVARCHAR](MAX),
                                   @Email        [NVARCHAR](MAX),   
 								  @UserType     [INT],                             
-                                  @CreatedBy    [BIGINT]
+                                  @CreatedByUserId    [BIGINT]
 AS
     BEGIN
         DECLARE @TodaysDate DATETIME= GETDATE();
 
-        IF @CreatedBy = 0 OR @CreatedBy = NULL
+        IF @CreatedByUserId = 0 OR @CreatedByUserId = NULL
             BEGIN
-                SELECT @CreatedBy = 1;
+                SELECT @CreatedByUserId = 1;
         END;
 
         BEGIN TRANSACTION;
@@ -26,9 +26,9 @@ AS
            ,[IsActive]
            ,[UserType]
            ,[CreatedOn]
-           ,[CreatedBy]
+           ,[CreatedByUserId]
            ,[ModifidOn]
-           ,[ModifiedBy])
+           ,[ModifiedByUserId])
      VALUES
 			(			     
 				 @UserName  
@@ -39,9 +39,9 @@ AS
 				 ,1 
 				, @UserType  
 				 ,@TodaysDate
-				, @CreatedBy 
+				, @CreatedByUserId 
 				 ,@TodaysDate
-				, @CreatedBy 
+				, @CreatedByUserId 
 			)
 
         DECLARE @UserIdCreated BIGINT= SCOPE_IDENTITY()
@@ -51,9 +51,9 @@ AS
 		  BEGIN TRANSACTION;
 		UPDATE [dbo].[UserDetail]
 	 SET 
-			  [CreatedBy] = @UserIdCreated
+			  [CreatedByUserId] = @UserIdCreated
 			  
-			  ,[ModifiedBy] = @UserIdCreated
+			  ,[ModifiedByUserId] = @UserIdCreated
 		 WHERE UserId = @UserIdCreated
 
 		  COMMIT TRANSACTION;

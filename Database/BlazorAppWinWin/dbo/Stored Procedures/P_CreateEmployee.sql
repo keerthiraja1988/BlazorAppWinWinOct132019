@@ -8,15 +8,15 @@ CREATE PROC [dbo].[P_CreateEmployee]
 								 @DOJ			[datetime] ,
 								 @IsActive		[bit] , 
 								 @Comments		[varchar](MAX) ,
-                                 @CreatedBy    [BIGINT]
+                                 @CreatedByUserId    [BIGINT]
 AS
     BEGIN
         DECLARE @TodaysDate DATETIME= GETDATE();
 		DECLARE @EmployeeId [bigint] 
 		DECLARE @EmployeeRequestId [bigint] 
-        IF @CreatedBy = 0 OR @CreatedBy = NULL
+        IF @CreatedByUserId = 0 OR @CreatedByUserId = NULL
             BEGIN
-                SELECT @CreatedBy = 1;
+                SELECT @CreatedByUserId = 1;
         END;	
 
         BEGIN TRANSACTION;
@@ -30,9 +30,9 @@ AS
            ,[DOJ]
            ,[IsActive]
            ,[CreatedOn]
-           ,[CreatedBy]
+           ,[CreatedByUserId]
            ,[ModifidOn]
-           ,[ModifiedBy])
+           ,[ModifiedByUserId])
      VALUES
           (
 				 @Title			
@@ -43,9 +43,9 @@ AS
 				,@DOJ			
 				,0	
 				,@TodaysDate	
-				,@CreatedBy    
+				,@CreatedByUserId    
 				,@TodaysDate	
-				,@CreatedBy
+				,@CreatedByUserId
 				)  
 
       SELECT @EmployeeId = CAST( SCOPE_IDENTITY() AS BIGINT)
@@ -62,9 +62,9 @@ AS
            ,[DOJ]
            ,[IsActive]
            ,[CreatedOn]
-           ,[CreatedBy]
+           ,[CreatedByUserId]
            ,[ModifidOn]
-           ,[ModifiedBy])
+           ,[ModifiedByUserId])
 
 	  VALUES
           (
@@ -79,9 +79,9 @@ AS
 				,@DOJ			
 				,0	
 				,@TodaysDate	
-				,@CreatedBy    
+				,@CreatedByUserId    
 				,@TodaysDate	
-				,@CreatedBy
+				,@CreatedByUserId
 				) 
 
 		 SELECT @EmployeeRequestId = CAST( SCOPE_IDENTITY() AS BIGINT)
@@ -93,9 +93,9 @@ AS
 			,[EmpAppReqStatusId]
 			,[Comments]
 			,[CreatedOn]
-			,[CreatedBy]
+			,[CreatedByUserId]
 			,[ModifidOn]
-			,[ModifiedBy])
+			,[ModifiedByUserId])
 	VALUES
           (
 				@EmployeeId
@@ -104,9 +104,9 @@ AS
 				,100 -- Submitted
 				,@Comments					
 				,@TodaysDate	
-				,@CreatedBy    
+				,@CreatedByUserId    
 				,@TodaysDate	
-				,@CreatedBy
+				,@CreatedByUserId
 			) 
 	  COMMIT TRANSACTION;
 	  	

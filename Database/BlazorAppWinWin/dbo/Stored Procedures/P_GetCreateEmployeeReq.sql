@@ -21,10 +21,10 @@ AS
 			  ,EmpReqs.[DOJ]
 			  ,EmpReqs.[IsActive]
 			  ,EmpReqs.[CreatedOn]
-			  ,EmpReqs.[CreatedBy]
+			  ,EmpReqs.[CreatedByUserId]
 			  ,USDCreatedBy.FirstName + ' ' + USDCreatedBy.LastName AS CreatedByFullName
 			  ,EmpReqs.[ModifidOn]
-			  ,EmpReqs.[ModifiedBy]		
+			  ,EmpReqs.[ModifiedByUserId]		
 			  ,USDModifiedBy.FirstName + ' ' + USDModifiedBy.LastName AS ModifiedByFullName
 			  ,(SELECT TOP 1 EmpReqStatusHistory.Comments FROM 
 				 EmployeesReqStatusHistory EmpReqStatusHistory
@@ -38,9 +38,9 @@ AS
 	   INNER JOIN EmpAppReqStatus EmpReqStatus
 	   ON EmpReqStatus.EmpAppReqStatusId = EmpReqs.EmpAppReqStatusId
 	   LEFT JOIN [dbo].[UserDetail] USDCreatedBy
-	   ON USDCreatedBy.UserId = EmpReqs.CreatedBy
+	   ON USDCreatedBy.UserId = EmpReqs.CreatedByUserId
 	   LEFT JOIN [dbo].[UserDetail] USDModifiedBy
-	   ON USDModifiedBy.UserId = EmpReqs.[ModifiedBy]
+	   ON USDModifiedBy.UserId = EmpReqs.[ModifiedByUserId]
 	   WHERE EmpReqs.EmpAppReqStatusId = 100 --Submitted
 	    AND EmpReqs.[EmployeeRequestId] = @EmployeeRequestId
 	ORDER BY EmpReqs.[EmployeeId]

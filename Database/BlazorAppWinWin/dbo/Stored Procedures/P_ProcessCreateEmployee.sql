@@ -5,7 +5,7 @@ CREATE PROC [dbo].[P_ProcessCreateEmployee]
 					,@EmployeeRequestId [bigint] 	
 					,@EmpAppReqStatusId SMALLINT
 					 ,@Comments		[varchar](MAX) 
-					 ,@CreatedBy    [BIGINT]	
+					 ,@CreatedByUserId    [BIGINT]	
 AS
     BEGIN
         DECLARE @TodaysDate DATETIME= GETDATE();
@@ -22,9 +22,9 @@ AS
 				,[EmpAppReqStatusId]
 				,[Comments]
 				,[CreatedOn]
-				,[CreatedBy]
+				,[CreatedByUserId]
 				,[ModifidOn]
-				,[ModifiedBy])
+				,[ModifiedByUserId])
 		VALUES
 			  (
 					@EmployeeId
@@ -33,22 +33,22 @@ AS
 					, 101  --Approved
 					,@Comments					
 					,@TodaysDate	
-					,@CreatedBy    
+					,@CreatedByUserId    
 					,@TodaysDate	
-					,@CreatedBy
+					,@CreatedByUserId
 				) 
 
 		UPDATE [dbo].[EmployeeRequests]
 			   SET [EmpAppReqStatusId] =  101  --Approved			  
 				  ,[IsActive] = 1			 
 				  ,[ModifidOn] = @TodaysDate
-				  ,[ModifiedBy] = @CreatedBy
+				  ,[ModifiedByUserId] = @CreatedByUserId
 			 WHERE [EmployeeRequestId] = @EmployeeRequestId
 
 		UPDATE [dbo].Employees
 			   SET [IsActive] = 1			 
 				  ,[ModifidOn] = @TodaysDate
-				  ,[ModifiedBy] = @CreatedBy
+				  ,[ModifiedByUserId] = @CreatedByUserId
 			 WHERE EmployeeId = @EmployeeId
 
 		  COMMIT TRANSACTION;
@@ -68,9 +68,9 @@ AS
 				,[EmpAppReqStatusId]
 				,[Comments]
 				,[CreatedOn]
-				,[CreatedBy]
+				,[CreatedByUserId]
 				,[ModifidOn]
-				,[ModifiedBy])
+				,[ModifiedByUserId])
 		VALUES
 			  (
 					@EmployeeId
@@ -79,22 +79,22 @@ AS
 					, @EmpAppReqStatusId
 					,@Comments					
 					,@TodaysDate	
-					,@CreatedBy    
+					,@CreatedByUserId    
 					,@TodaysDate	
-					,@CreatedBy
+					,@CreatedByUserId
 				) 
 
 		UPDATE [dbo].[EmployeeRequests]
 			   SET [EmpAppReqStatusId] =  @EmpAppReqStatusId
 				  ,[IsActive] = 0			 
 				  ,[ModifidOn] = @TodaysDate
-				  ,[ModifiedBy] = @CreatedBy
+				  ,[ModifiedByUserId] = @CreatedByUserId
 			 WHERE [EmployeeRequestId] = @EmployeeRequestId
 
 		UPDATE [dbo].Employees
 			   SET [IsActive] = 0			 
 				  ,[ModifidOn] = @TodaysDate
-				  ,[ModifiedBy] = @CreatedBy
+				  ,[ModifiedByUserId] = @CreatedByUserId
 			 WHERE EmployeeId = @EmployeeId
 
 		  COMMIT TRANSACTION;

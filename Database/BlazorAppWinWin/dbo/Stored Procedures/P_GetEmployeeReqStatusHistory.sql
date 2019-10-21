@@ -21,10 +21,10 @@ AS
 		,EmpReqStatus.EmpAppReqStatusDesc
 		,EmpReqStatusHist.[Comments]
 		,EmpReqStatusHist.[CreatedOn]
-		,EmpReqStatusHist.[CreatedBy]
+		,EmpReqStatusHist.[CreatedByUserId]
 		 ,USDCreatedBy.FirstName + ' ' + USDCreatedBy.LastName AS CreatedByFullName
 		,EmpReqStatusHist.[ModifidOn]
-		,EmpReqStatusHist.[ModifiedBy]
+		,EmpReqStatusHist.[ModifiedByUserId]
 		,USDModifiedBy.FirstName + ' ' + USDModifiedBy.LastName AS ModifiedByFullName
 	FROM [dbo].[EmployeesReqStatusHistory] EmpReqStatusHist
 	INNER JOIN EmpAppOprStatus EmpOprStatus
@@ -32,8 +32,8 @@ AS
 	INNER JOIN EmpAppReqStatus EmpReqStatus
 	ON EmpReqStatus.EmpAppReqStatusId = EmpReqStatusHist.EmpAppReqStatusId
 	LEFT JOIN [dbo].[UserDetail] USDCreatedBy
-	ON USDCreatedBy.UserId = EmpReqStatusHist.CreatedBy
+	ON USDCreatedBy.UserId = EmpReqStatusHist.CreatedByUserId
 	LEFT JOIN [dbo].[UserDetail] USDModifiedBy
-	ON USDModifiedBy.UserId = EmpReqStatusHist.[ModifiedBy]
+	ON USDModifiedBy.UserId = EmpReqStatusHist.[ModifiedByUserId]
 		WHERE EmpReqStatusHist.[EmployeeRequestId] = @EmployeeRequestId
     END;

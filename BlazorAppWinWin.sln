@@ -40,7 +40,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{E683FBC0-A170-4488-9326-4C9C624E5412}"
 	ProjectSection(SolutionItems) = preProject
 		Data10212019.sql = Data10212019.sql
+		Database\Scripts\Data10222019.sql = Database\Scripts\Data10222019.sql
 		Object10212019.sql = Object10212019.sql
+		Database\Scripts\Object10222019.sql = Database\Scripts\Object10222019.sql
 	EndProjectSection
 EndProject
 Global
