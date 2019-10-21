@@ -49,5 +49,16 @@
             pendingApprovalsRM = this._mapper.Map<List<EmployeePendingApprovalRM>>(pendingApprovals);
             return pendingApprovalsRM;
         }
+
+        [Authorize]
+        [HttpGet("GetAllEmpAppReqStatusAsync")]
+        public async Task<List<EmpAppReqStatusResModel>> GetAllEmpAppReqStatusAsync()
+        {
+            List<EmpAppReqStatus> empAppReqStatues = new List<EmpAppReqStatus>();
+            List<EmpAppReqStatusResModel> empAppReqStatusesEM = new List<EmpAppReqStatusResModel>();
+            empAppReqStatues = await this._employeeApprovalRepository.GetAllEmpAppReqStatusAsync();
+            empAppReqStatusesEM = this._mapper.Map<List<EmpAppReqStatusResModel>>(empAppReqStatues);
+            return empAppReqStatusesEM;
+        }
     }
 }

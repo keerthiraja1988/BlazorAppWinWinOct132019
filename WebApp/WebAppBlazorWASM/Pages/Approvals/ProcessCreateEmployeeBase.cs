@@ -11,16 +11,21 @@
     using ResourceModel.Authentication;
     using ResourceModel.EmployeeApproval;
     using WebAppBlazorWASM.Services;
+    using ResourceModel.EmployeeManage;
 
     public class ProcessCreateEmployeeBase : ComponentBase
     {
         public long EmployeeRequestId { get; set; } = 0;
 
-        public JwtToken JwtToken { get; set; } = new JwtToken();
-
         public EmployeePendingApprovalRM PendingApproval { get; set; } = new EmployeePendingApprovalRM();
 
+        public List<EmpAppReqStatusResModel> EmpAppReqStatusesRM { get; set; } = new List<EmpAppReqStatusResModel>();
+
         public string EmpAppReqStatusId { get; set; }
+
+        public ProcessCreateEmployeeRM ProcessCreateEmployeeRM { get; set; } = new ProcessCreateEmployeeRM();
+
+        public JwtToken JwtToken { get; set; } = new JwtToken();
 
         [Inject]
         protected ILocalStorageService _localStorage { get; set; }
@@ -37,11 +42,19 @@
         public async Task OnPendingApprovalsLoad()
         {
             this.JwtToken = await this._appSharedService.GetLoggedInUserDetails();
-            var pendingApprovals = await this._employeeApprovalService.GetAllEmployeesPendingApprovalsAsync();
-            Console.WriteLine(this.EmployeeRequestId);
+            var task1 = this._employeeApprovalService.GetAllEmployeesPendingApprovalsAsync();
+            var task2 = this._employeeApprovalService.GetAllEmpAppReqStatusAsync();
 
+            await Task.WhenAll(task1, task2);
+
+            var pendingApprovals = await task1;
+            this.EmpAppReqStatusesRM = await task2;
             this.PendingApproval = pendingApprovals.Where(x => x.EmployeeRequestId == this.EmployeeRequestId).FirstOrDefault();
-            Console.WriteLine(this.PendingApproval.EmployeeRequestId.ToString());
+        }
+
+        public async Task OnProcessCreateEmployeeBtnClick()
+        {
+            Console.WriteLine(ProcessCreateEmployeeRM.Comments);
         }
     }
 }

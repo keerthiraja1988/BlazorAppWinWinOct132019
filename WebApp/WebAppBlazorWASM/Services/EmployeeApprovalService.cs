@@ -50,5 +50,15 @@
 
             return pendingApprovalsRM;
         }
+
+        public async Task<List<EmpAppReqStatusResModel>> GetAllEmpAppReqStatusAsync()
+        {
+            List<EmpAppReqStatusResModel> empAppReqStatusesEM = new List<EmpAppReqStatusResModel>();
+
+            string url = await this._appConfigurationService.GetApiUrl("EmployeeManageApi");
+            empAppReqStatusesEM = await this._httpClient.GetJsonAsync<List<EmpAppReqStatusResModel>>(url + "/api/EmployeeApproval/GetAllEmpAppReqStatusAsync");
+
+            return empAppReqStatusesEM;
+        }
     }
 }

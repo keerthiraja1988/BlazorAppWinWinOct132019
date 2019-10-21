@@ -2,8 +2,6 @@
 
 @inherits ProcessCreateEmployeeBase
 
-@inject IJSRuntime _jsRuntime
-
 @code {
 
     [Parameter]
@@ -11,10 +9,10 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await _jsRuntime.InvokeVoidAsync("homeController.setActiveNavBar", "navItemApprovals");
-        EmployeeRequestId = Convert.ToInt64(EmployeeRequestIdStr);
-        await OnPendingApprovalsLoad();
-        await _jsRuntime.InvokeVoidAsync("homeController.hideLoadingIndicator", "");
+        await base._jsRuntime.InvokeVoidAsync("homeController.setActiveNavBar", "navItemApprovals");
+        base.EmployeeRequestId = Convert.ToInt64(EmployeeRequestIdStr);
+        await base.OnPendingApprovalsLoad();
+        await base._jsRuntime.InvokeVoidAsync("homeController.hideLoadingIndicator", "");
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -27,7 +25,7 @@
         <div class="col-12">
             <Card Class="">
                 <CardHeader Class="pt-1 pb-1 pl-2 pr-2 text-center">
-                    <h4 class="font-weight-normal mb-0">Process Employee (@PendingApproval.EmployeeId) - Create</h4>
+                    <h4 class="font-weight-normal mb-0">Process Employee Id - @base.PendingApproval.EmployeeId</h4>
                 </CardHeader>
 
                 <CardBody Class="pt-0 pb-0 pl-0 pr-0">
@@ -38,7 +36,8 @@
                                     <thead class="bg-info" style="color:white">
                                         <tr>
                                             <th scope="col">Employee Id</th>
-                                            <th scope="col">Request</th>
+                                            <th scope="col">Employee Request Id</th>
+                                            <th scope="col">Request Type</th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Title</th>
                                             <th scope="col">First Name</th>
@@ -69,6 +68,7 @@
                                                 <td>
                                                     @PendingApproval.EmployeeId
                                                 </td>
+                                                <td>@PendingApproval.EmployeeRequestId</td>
                                                 <td>@PendingApproval.EmpAppOprStatusDesc</td>
                                                 <td>@PendingApproval.EmpAppReqStatusDesc</td>
                                                 <td>@PendingApproval.EmployeeTitleDesc</td>
@@ -88,26 +88,36 @@
                             </div>
                         </div>
                     </div>
+                    <EditForm Model="@ProcessCreateEmployeeRM" OnValidSubmit="@OnProcessCreateEmployeeBtnClick">
+                        <DataAnnotationsValidator />
+                        <div class="row text-center d-flex justify-content-end pr-1">
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-3">
+                                <div class="form-label-group mb-2 text-left">
+                                    <label for="inputProcess">Comments*</label>
 
-                    <div class="row text-center d-flex justify-content-end">
-                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-3">
-                            <div class="form-label-group mb-2 text-left">
-                                <label for="inputProcess">Comments*</label>
-                                <textarea Class="form-control" rows="4" id="inputComments">
-                             </textarea>
+                                    <InputTextArea id="inputComments" @bind-Value="@ProcessCreateEmployeeRM.Comments"
+                                                   Style="height:100px;" Class="form-control" />
+                                    <ValidationMessage For="@(() => ProcessCreateEmployeeRM.Comments)" Class="lead" />
+                                </div>
+                                <div class="form-label-group mb-2 text-left">
+                                    <label for="inputProcess">Process*</label>
+
+                                    <InputSelect id="inputTitle" @bind-Value="@ProcessCreateEmployeeRM.EmpAppReqStatusId" Class="form-control">
+                                        <option value="">--Select Title--</option>
+
+                                        @foreach (var item in EmpAppReqStatusesRM)
+                                        {
+                                            <option value="@item.EmpAppReqStatusId">@item.EmpAppReqStatusDesc</option>
+                                        }
+                                    </InputSelect>
+                                    <ValidationMessage For="@(() => ProcessCreateEmployeeRM.EmpAppReqStatusId)" Class="lead" />
+                                </div>
+                                <button class="btn btn-primary" type="submit">
+                                    <Icon Class="pr-1" Name="@("far fa-save")" />    Submit
+                                </button>
                             </div>
-                            <div class="form-label-group mb-2 text-left">
-                                <label for="inputProcess">Process*</label>
-                                <select id="inputProcess" @bind="EmpAppReqStatusId" Class="form-control">
-                                    <option value="">--Select--</option>
-                                    <option value="Diplomacy">Diplomacy</option>
-                                </select>
-                            </div>
-                            <button class="btn btn-secondary" type="button">
-                                <Icon Class="pr-1" Name="@("far fa-save")" />    Submit
-                            </button>
                         </div>
-                    </div>
+                    </EditForm>
                 </CardBody>
             </Card>
         </div>
