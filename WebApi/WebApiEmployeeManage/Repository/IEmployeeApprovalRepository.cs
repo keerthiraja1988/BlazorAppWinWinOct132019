@@ -15,11 +15,17 @@
         [Sql("P_GetAllEmployeesPendingApprovals")]
         Task<List<EmployeePendingApproval>> GetAllEmployeesPendingApprovalsAsync();
 
+        [Sql("P_GetAllEmployeesOnHoldApprovals")]
+        Task<List<EmployeePendingApproval>> GetAllEmployeesOnHoldApprovalsAsync();
+
         [Sql(@"SELECT  * FROM EmpAppReqStatus")]
         Task<List<EmpAppReqStatus>> GetAllEmpAppReqStatusAsync();
 
         [Sql("[dbo].[P_GetCreateEmployeeReq]")]
         Task<EmployeePendingApproval> GetCreateEmployeeReqAsync(long employeeRequestId);
+
+        [Sql("[dbo].[P_GetCreateEmployeeReqOnHold]")]
+        Task<EmployeePendingApproval> GetCreateEmployeeReqOnHoldAsync(long employeeRequestId);
 
         [Sql("P_ProcessCreateEmployee")]
         Task<bool> ProcessCreateEmployeeAsync(EmployeePendingApproval processCreateEmployee);

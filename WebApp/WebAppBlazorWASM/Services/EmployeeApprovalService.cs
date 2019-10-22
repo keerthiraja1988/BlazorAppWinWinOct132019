@@ -51,6 +51,16 @@
             return pendingApprovalsRM;
         }
 
+        public async Task<List<EmployeePendingApprovalRM>> GetAllEmployeesOnHoldApprovalsAsync()
+        {
+            List<EmployeePendingApprovalRM> pendingApprovalsRM = new List<EmployeePendingApprovalRM>();
+
+            string url = await this._appConfigurationService.GetApiUrl("EmployeeManageApi");
+            pendingApprovalsRM = await this._httpClient.GetJsonAsync<List<EmployeePendingApprovalRM>>(url + "/api/EmployeeApproval/GetAllEmployeesOnHoldApprovalsAsync");
+
+            return pendingApprovalsRM;
+        }
+
         public async Task<List<EmpAppReqStatusResModel>> GetAllEmpAppReqStatusAsync()
         {
             List<EmpAppReqStatusResModel> empAppReqStatusesEM = new List<EmpAppReqStatusResModel>();
@@ -94,6 +104,24 @@
             isProcessSuccess = JsonConvert.DeserializeObject<bool>(stringJWT);
 
             return isProcessSuccess;
+        }
+
+        public async Task<(EmployeePendingApprovalRM CreateEmployeeDetails
+                       , List<EmpAppReqStatusResModel> ReqStatuses
+                       , List<EmployeesReqStatusHistResModel> EmployeesReqStatusHistories)> GetCreateEmployeeReqOnHoldAsync(long employeeId, long employeeRequestId)
+        {
+            string url = await this._appConfigurationService.GetApiUrl("EmployeeManageApi");
+
+            string stringJWT = await this._httpClient.GetJsonAsync<string>(url + "/api/EmployeeApproval/GetCreateEmployeeReqOnHoldAsync?employeeId="
+                                    + employeeId
+                                    + "&employeeRequestId=" + employeeRequestId
+                                );
+
+            var responses = JsonConvert.DeserializeObject<(EmployeePendingApprovalRM
+                               , List<EmpAppReqStatusResModel>
+                               , List<EmployeesReqStatusHistResModel>)>(stringJWT);
+
+            return (responses.Item1, responses.Item2, responses.Item3);
         }
     }
 }
