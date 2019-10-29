@@ -4,9 +4,12 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Autofac.Extras.DynamicProxy;
     using DomainModel;
     using Insight.Database;
+    using WebApiAuthentication.Infrastructure.Logger;
 
+    [Intercept(typeof(RepositoryInterfaceLogger))]
     public interface IAuthenticationRepository
     {
         [Sql(@"SELECT *  FROM [dbo].[UserDetail]")]

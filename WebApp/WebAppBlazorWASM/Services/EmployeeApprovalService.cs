@@ -106,7 +106,7 @@
             return isProcessSuccess;
         }
 
-        public async Task<(EmployeePendingApprovalRM CreateEmployeeDetails
+        public async Task<(EmployeePendingApprovalRM OnHoldEmployeeDetails
                        , List<EmpAppReqStatusResModel> ReqStatuses
                        , List<EmployeesReqStatusHistResModel> EmployeesReqStatusHistories)> GetCreateEmployeeReqOnHoldAsync(long employeeId, long employeeRequestId)
         {

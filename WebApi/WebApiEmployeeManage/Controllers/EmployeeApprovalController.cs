@@ -145,6 +145,7 @@
             employeesReqStatusHistoriesRM = this._mapper.Map<List<EmployeesReqStatusHistResModel>>(employeesReqStatusHistories);
 
             empAppReqStatusesEM = empAppReqStatusesEM.Where(x => x.EmpAppReqStatusId != 100).ToList();  //100	Submitted
+            empAppReqStatusesEM = empAppReqStatusesEM.Where(x => x.EmpAppReqStatusId != 103).ToList();  //100	Submitted
 
             //return Ok(JsonConvert.SerializeObject((empAppReqStatusEM, empAppReqStatusesEM, employeesReqStatusHistoriesRM)));
 
@@ -161,6 +162,16 @@
         {
             EmployeePendingApproval processCreateEmployee = new EmployeePendingApproval();
             processCreateEmployee = this._mapper.Map<EmployeePendingApproval>(processCreateEmployeeRM);
+
+            return await this._employeeApprovalRepository.ProcessCreateEmployeeAsync(processCreateEmployee);
+        }
+
+        [Authorize]
+        [HttpPost("ProcessOhHoldEmployeeAsync")]
+        public async Task<bool> ProcessOhHoldEmployeeAsync(ProcessCreateEmployeeRM processOhHoldEmployeeRM)
+        {
+            EmployeePendingApproval processCreateEmployee = new EmployeePendingApproval();
+            processCreateEmployee = this._mapper.Map<EmployeePendingApproval>(processOhHoldEmployeeRM);
 
             return await this._employeeApprovalRepository.ProcessCreateEmployeeAsync(processCreateEmployee);
         }

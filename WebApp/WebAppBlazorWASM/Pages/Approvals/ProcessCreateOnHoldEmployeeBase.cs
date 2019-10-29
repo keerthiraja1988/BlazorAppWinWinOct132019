@@ -16,22 +16,6 @@
 
     public class ProcessCreateOnHoldEmployeeBase : ComponentBase
     {
-        public long EmployeeRequestId { get; set; } = 0;
-
-        public long EmployeeId { get; set; } = 0;
-
-        public EmployeePendingApprovalRM PendingApproval { get; set; } = new EmployeePendingApprovalRM();
-
-        public List<EmpAppReqStatusResModel> EmpAppReqStatusesRM { get; set; } = new List<EmpAppReqStatusResModel>();
-
-        public List<EmployeesReqStatusHistResModel> EmployeesReqStatusHistoriesRM { get; set; } = new List<EmployeesReqStatusHistResModel>();
-
-        public string EmpAppReqStatusId { get; set; }
-
-        public ProcessCreateEmployeeRM ProcessCreateEmployeeRM { get; set; } = new ProcessCreateEmployeeRM();
-
-        public JwtToken JwtToken { get; set; } = new JwtToken();
-
         [Inject]
         protected NavigationManager _navigationManager { get; set; }
 
@@ -47,39 +31,51 @@
         [Inject]
         protected EmployeeApprovalService _employeeApprovalService { get; set; }
 
-        public async Task OnPendingApprovalsLoad()
+        public long EmployeeRequestId { get; set; } = 0;
+
+        public long EmployeeId { get; set; } = 0;
+
+        public List<EmpAppReqStatusResModel> EmpAppReqStatusesRM { get; set; } = new List<EmpAppReqStatusResModel>();
+
+        public List<EmployeesReqStatusHistResModel> EmployeesReqStatusHistoriesRM { get; set; } = new List<EmployeesReqStatusHistResModel>();
+
+        public EmployeePendingApprovalRM OnHoldApproval { get; set; } = new EmployeePendingApprovalRM();
+
+        public ProcessCreateEmployeeRM ProcessOnHoldEmployeeRM { get; set; } = new ProcessCreateEmployeeRM();
+
+        public JwtToken JwtToken { get; set; } = new JwtToken();
+
+        public async Task ProcessCreateOnHoldEmployeeOnLoad()
         {
             this.JwtToken = await this._appSharedService.GetLoggedInUserDetails();
 
             var employeeDetails = await this._employeeApprovalService.GetCreateEmployeeReqOnHoldAsync(EmployeeId, EmployeeRequestId);
 
+            this.OnHoldApproval = employeeDetails.OnHoldEmployeeDetails;
             this.EmpAppReqStatusesRM = employeeDetails.ReqStatuses;
-            this.PendingApproval = employeeDetails.CreateEmployeeDetails;
             this.EmployeesReqStatusHistoriesRM = employeeDetails.EmployeesReqStatusHistories;
 
-            this.ProcessCreateEmployeeRM.EmployeeId = this.PendingApproval.EmployeeId.ToString();
-            this.ProcessCreateEmployeeRM.EmployeeRequestId = this.PendingApproval.EmployeeRequestId.ToString();
-            this.ProcessCreateEmployeeRM.CreatedBy = this.JwtToken.UserId;
-
-            Console.WriteLine("asfdsad " + PendingApproval.EmployeeId.ToString());
+            this.ProcessOnHoldEmployeeRM.EmployeeId = this.OnHoldApproval.EmployeeId.ToString();
+            this.ProcessOnHoldEmployeeRM.EmployeeRequestId = this.OnHoldApproval.EmployeeRequestId.ToString();
+            this.ProcessOnHoldEmployeeRM.CreatedBy = this.JwtToken.UserId;
         }
 
-        public async Task OnProcessCreateEmployeeBtnClick()
+        public async Task OnProcessOnHoldEmployeeBtnClick()
         {
             await this._jsRuntime.InvokeVoidAsync("homeController.showLoadingIndicator", "");
 
-            var isProcessSuccess = await this._employeeApprovalService.ProcessCreateEmployeeAsync(this.ProcessCreateEmployeeRM);
+            //    var isProcessSuccess = await this._employeeApprovalService.ProcessCreateEmployeeAsync(this.ProcessCreateEmployeeRM);
 
-            if (isProcessSuccess)
-            {
-                await this._jsRuntime.InvokeVoidAsync("approvalsController.ProcessCreateEmployeeSuccessModalShow"
-                                , "");
-            }
+            //    if (isProcessSuccess)
+            //    {
+            //        await this._jsRuntime.InvokeVoidAsync("approvalsController.ProcessCreateEmployeeSuccessModalShow"
+            //                        , "");
+            //    }
 
-            await this._jsRuntime.InvokeVoidAsync("homeController.hideLoadingIndicator", "");
+            //    await this._jsRuntime.InvokeVoidAsync("homeController.hideLoadingIndicator", "");
         }
 
-        public async Task OnProcessCreateEmployeeCloseBtnClick()
+        public async Task OnProcessOnHoldEmployeeCloseBtnClick()
         {
             this._navigationManager.NavigateTo("PendingApprovals");
 

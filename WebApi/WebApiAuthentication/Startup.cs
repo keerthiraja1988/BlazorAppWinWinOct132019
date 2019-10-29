@@ -8,6 +8,7 @@
     using System.Text;
     using System.Threading.Tasks;
     using Autofac;
+    using Autofac.Extras.DynamicProxy;
     using AutoMapper;
     using ElmahCore;
     using ElmahCore.Mvc;
@@ -27,6 +28,7 @@
     using Newtonsoft.Json.Serialization;
     using Swashbuckle.AspNetCore.Swagger;
     using WebApiAuthentication.Infrastructure;
+    using WebApiAuthentication.Infrastructure.Logger;
     using WebApiAuthentication.Repository;
 
     public class Startup
@@ -46,7 +48,10 @@
             DbConnection sqlConnection = new SqlConnection("Data Source=.;Initial Catalog=BlazorAppWinWin;Integrated Security=True;Persist Security Info=true;");
             builder
                 .Register(b => sqlConnection.AsParallel<IAuthenticationRepository>())
-                .InstancePerLifetimeScope();
+                .InstancePerLifetimeScope()
+                .EnableInterfaceInterceptors()
+                .InterceptedBy(typeof(RepositoryInterfaceLogger)); ;
+            builder.Register(c => new RepositoryInterfaceLogger(Console.Out));
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.

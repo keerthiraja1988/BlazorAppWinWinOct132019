@@ -1,7 +1,5 @@
 ﻿@page "/ProcessCreateOnHoldEmployee/{EmployeeRequestIdStr}"
-
 @inherits ProcessCreateOnHoldEmployeeBase
-
 @code {
 
     [Parameter]
@@ -12,7 +10,7 @@
         await base._jsRuntime.InvokeVoidAsync("homeController.setActiveNavBar", "navItemApprovals");
         await base._jsRuntime.InvokeVoidAsync("homeController.loadApprovalsController", "");
         base.EmployeeRequestId = Convert.ToInt64(EmployeeRequestIdStr);
-        await base.OnPendingApprovalsLoad();
+        await base.ProcessCreateOnHoldEmployeeOnLoad();
         await base._jsRuntime.InvokeVoidAsync("homeController.hideLoadingIndicator", "");
     }
 
@@ -26,7 +24,7 @@
         <div class="col-12">
             <Card Class="">
                 <CardHeader Class="pt-1 pb-1 pl-2 pr-2 text-center">
-                    <h4 class="font-weight-normal mb-0">Process Employee Id - @base.PendingApproval.EmployeeId</h4>
+                    <h4 class="font-weight-normal mb-0">Process Employee Id - @base.OnHoldApproval.EmployeeId</h4>
                 </CardHeader>
 
                 <CardBody Class="pt-0 pb-0 pl-0 pr-0">
@@ -54,7 +52,7 @@
                                     </thead>
                                     <tbody style="font-size: 14px;">
 
-                                        @if (PendingApproval == null || PendingApproval.EmployeeRequestId == 0)
+                                        @if (OnHoldApproval == null || OnHoldApproval.EmployeeRequestId == 0)
                                         {
                                             <tr>
                                                 <td>
@@ -67,21 +65,21 @@
                                         {
                                             <tr>
                                                 <td>
-                                                    @PendingApproval.EmployeeId
+                                                    @OnHoldApproval.EmployeeId
                                                 </td>
-                                                <td>@PendingApproval.EmployeeRequestId</td>
-                                                <td>@PendingApproval.EmpAppOprStatusDesc</td>
-                                                <td>@PendingApproval.EmpAppReqStatusDesc</td>
-                                                <td>@PendingApproval.EmployeeTitleDesc</td>
-                                                <td>@PendingApproval.FirstName</td>
-                                                <td>@PendingApproval.LastName</td>
-                                                <td>@PendingApproval.PersonalEmail</td>
-                                                <td>@PendingApproval.DOB.Value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</td>
-                                                <td>@PendingApproval.DOJ.Value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</td>
-                                                <td>@PendingApproval.IsActive</td>
-                                                <td>@PendingApproval.CreatedOn</td>
-                                                <td>@PendingApproval.CreatedByFullName</td>
-                                                <td>@PendingApproval.Comments</td>
+                                                <td>@OnHoldApproval.EmployeeRequestId</td>
+                                                <td>@OnHoldApproval.EmpAppOprStatusDesc</td>
+                                                <td>@OnHoldApproval.EmpAppReqStatusDesc</td>
+                                                <td>@OnHoldApproval.EmployeeTitleDesc</td>
+                                                <td>@OnHoldApproval.FirstName</td>
+                                                <td>@OnHoldApproval.LastName</td>
+                                                <td>@OnHoldApproval.PersonalEmail</td>
+                                                <td>@OnHoldApproval.DOB.Value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</td>
+                                                <td>@OnHoldApproval.DOJ.Value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</td>
+                                                <td>@OnHoldApproval.IsActive</td>
+                                                <td>@OnHoldApproval.CreatedOn</td>
+                                                <td>@OnHoldApproval.CreatedByFullName</td>
+                                                <td>@OnHoldApproval.Comments</td>
                                             </tr>
                                         }
                                     </tbody>
@@ -148,31 +146,31 @@
                             </Card>
                         </div>
                         <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 pb-1">
-                            <EditForm Model="@ProcessCreateEmployeeRM" OnValidSubmit="@OnProcessCreateEmployeeBtnClick">
+                            <EditForm Model="@ProcessOnHoldEmployeeRM" OnValidSubmit="@OnProcessOnHoldEmployeeBtnClick">
                                 <DataAnnotationsValidator />
                                 <div class="row text-center d-flex justify-content-end pr-1">
-                                    <InputText id="inputEmployeeIdHiden" @bind -Value="@ProcessCreateEmployeeRM.EmployeeId" Class="form-control" Style="display: none;" />
+                                    <InputText id="inputEmployeeIdHiden" @bind-Value="@ProcessOnHoldEmployeeRM.EmployeeId" Class="form-control" Style="display: none;" />
 
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                         <div class="form-label-group mb-2 text-left">
                                             <label for="inputProcess">Comments*</label>
 
-                                            <InputTextArea id="inputComments" @bind -Value="@ProcessCreateEmployeeRM.Comments"
+                                            <InputTextArea id="inputComments" @bind-Value="@ProcessOnHoldEmployeeRM.Comments"
                                                            Style="height:100px;" Class="form-control" />
-                                            <ValidationMessage For="@(() => ProcessCreateEmployeeRM.Comments)" Class="lead" />
+                                            <ValidationMessage For="@(() => ProcessOnHoldEmployeeRM.Comments)" Class="lead" />
                                         </div>
                                         <div class="form-label-group mb-2 text-left">
                                             <label for="inputProcess">Process*</label>
 
-                                            @*<InputSelect id="inputTitle" @bind -Value="@ProcessCreateEmployeeRM.EmpAppReqStatusId" Class="form-control">
-                                                    <option value="">--Select Title--</option>
+                                            <InputSelect id="inputTitle" @bind-Value="@ProcessOnHoldEmployeeRM.EmpAppReqStatusId" Class="form-control">
+                                                <option value="">--Select Title--</option>
 
-                                                    @foreach (var item in EmpAppReqStatusesRM)
-                                                    {
-                                                        <option value="@item.EmpAppReqStatusId">@item.EmpAppReqStatusDesc</option>
-                                                    }
-                                                </InputSelect>*@
-                                            <ValidationMessage For="@(() => ProcessCreateEmployeeRM.EmpAppReqStatusId)" Class="lead" />
+                                                @foreach (var item in EmpAppReqStatusesRM)
+                                                {
+                                                    <option value="@item.EmpAppReqStatusId">@item.EmpAppReqStatusDesc</option>
+                                                }
+                                            </InputSelect>
+                                            <ValidationMessage For="@(() => ProcessOnHoldEmployeeRM.EmpAppReqStatusId)" Class="lead" />
                                         </div>
                                         <button class="btn btn-primary" type="submit">
                                             <Icon Class="pr-1" Name="@("far fa-save")" />    Submit
@@ -187,7 +185,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="ProcessCreateEmployeeSuccessModal" data-backdrop="static" data-keyboard="false">
+    <div class="modal fade" id="ProcessOnHoldEmployeeSuccessModal" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -195,12 +193,12 @@
                 </div>
                 <div class="modal-body">
                     <span id="">
-                        Request submitted sucessfully. Click Ok to re-direct to Pending Approval screen.
+                        Request submitted sucessfully. Click Ok to re-direct to On Hold Approval screen.
                     </span>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary"
-                            @onclick="@(async () => await OnProcessCreateEmployeeCloseBtnClick())">
+                            @onclick="@(async () => await OnProcessOnHoldEmployeeCloseBtnClick())">
                         <i class="fas fa-check"></i>
                         Ok
                     </button>
